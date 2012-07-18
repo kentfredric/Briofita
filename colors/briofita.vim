@@ -6,7 +6,7 @@
 "              As 'Briofita' is akin to 'Bryophyta', so should it be pronounced.
 " Author:      Sergio Nobre <sergio.o.nobre@gmail.com>
 " License:     Vim License
-" Version:     1.3
+" Version:     1.4
 " Last Change: Tuesday, July 18th, 2012
 " Inspiration: Tweaks on the Moss vimscript to fit personal preferences are in
 "              the origins of this colorscheme. (Moss, by Chunlin Li, 
@@ -20,6 +20,7 @@
 " =============================================================================
 " General Notes: {{{1
 " History:   {{{2
+"   Version 1.4 -  Bug fix on option for CursorLineNr.
 "   Version 1.3 -  Improved defaults logic.
 "   Version 1.2 -  Improved option *choice_for_colorcolumn.
 "   Version 1.1 -  Bug fix on option *choice_for_cursorline.
@@ -128,12 +129,12 @@ else
     endif
 endif
 
-if !exists("t:Briofita_choice_for_cursorlinenr")
-    let t:Briofita_choice_for_cursorlinenr = 0
-elseif t:Briofita_choice_for_cursorlinenr>1
-    let t:Briofita_choice_for_cursorlinenr = 1
-elseif t:Briofita_choice_for_cursorlinenr<0
-    let t:Briofita_choice_for_cursorlinenr = 0
+if !exists("g:Briofita_choice_for_cursorlinenr")
+    let g:Briofita_choice_for_cursorlinenr = 0
+elseif g:Briofita_choice_for_cursorlinenr>1
+    let g:Briofita_choice_for_cursorlinenr = 1
+elseif g:Briofita_choice_for_cursorlinenr<0
+    let g:Briofita_choice_for_cursorlinenr = 0
 endif
 
 " ColorDictParser Function: used to create the colors dictionary {{{1
@@ -901,11 +902,11 @@ else " default is the same as 0
     highlight Normal guifg=#C6B6FE guibg=#062926 gui=NONE
 endif
 "
-" CursorLineNr Color: defined per global var t:Briofita_choice_for_cursorlinenr  {{{1
+" CursorLineNr Color: defined per global var g:Briofita_choice_for_cursorlinenr  {{{1
 " ------------------   CURSOR LINE NR COLOR ----------------------------------
-if t:Briofita_choice_for_cursorlinenr==0 " orange
+if g:Briofita_choice_for_cursorlinenr==0 " orange
     highlight CursorLineNr guifg=Orange guibg=bg gui=bold
-elseif t:Briofita_choice_for_cursorlinenr==1 " yellow
+elseif g:Briofita_choice_for_cursorlinenr==1 " yellow
     highlight CursorLineNr guifg=Yellow guibg=bg gui=bold
 else " default is the same as 0
     highlight CursorLineNr guifg=Orange guibg=bg gui=bold
