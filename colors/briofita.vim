@@ -9,7 +9,7 @@ if (!has('gui_running')) || (!v:version >= 703)
     echoerr "Colorscheme ".this_color." was designed only for Vim versions >= 7.3.0 in GUI mode."
     finish
 endif
-let g:briofitaversion = "2.0.1"
+let g:briofitaversion = "2.0.2"
 set background=dark
 hi clear
 if exists("syntax_on")
@@ -1685,18 +1685,18 @@ elseif (s:dict_conf_options.search[0]==4)
     highlight diffAdd     gui=NONE      guifg=#CC4455 guibg=#1E4959
     highlight Search      gui=underline guifg=#556B2F guibg=#E7F56B
 elseif (s:dict_conf_options.search[0]==5)
-    highlight DiffText    gui=NONE      guifg=Black   guibg=Bisque2
-    highlight diffChange  gui=underline guifg=#C59F6F guibg=#1E4959
-    highlight diffAdd     gui=NONE      guifg=#88CB35 guibg=#1E4959
-    highlight Search      gui=underline guifg=#FF88AA guibg=bg
-else " if extraneous value is detected, it is changed to default (zero)
-    let s:dict_conf_options.search[0]=0   " make it easier to create a rotation scheme
-endif
-if (s:dict_conf_options.search[0]==0) " DEFAULT
     highlight DiffText    gui=NONE      guifg=Wheat3         guibg=#AD2728
     highlight diffChange  gui=NONE	    guifg=DarkSlateGray2 guibg=#25453D
     highlight diffAdd     gui=NONE      guifg=#CC4455        guibg=Black
     highlight Search      gui=underline guifg=#E7F56B        guibg=#E22A37
+else " if extraneous value is detected, it is changed to default (zero)
+    let s:dict_conf_options.search[0]=0   " make it easier to create a rotation scheme
+endif
+if (s:dict_conf_options.search[0]==0) " DEFAULT
+    highlight DiffText    gui=NONE      guifg=Black   guibg=Bisque2
+    highlight diffChange  gui=underline guifg=#C59F6F guibg=#1E4959
+    highlight diffAdd     gui=NONE      guifg=#88CB35 guibg=#1E4959
+    highlight Search      gui=underline guifg=#FF88AA guibg=bg
 endif
 highlight! link diffChanged diffChange
 highlight! link diffAdded   diffAdd

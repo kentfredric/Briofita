@@ -2,7 +2,7 @@
 "   Plugin:    briofita-support
 "   Author:    Sergio O. Nobre
 "   Date:      May 14, 2013
-"   Version:   2.0.1
+"   Version:   2.0.2
 "   Purpose:   Interface for the use and customization of the Briofita colorscheme.
 "              This plugin makes it easier for the user to make
 "              a rotation scheme ("cycle") with the colorscheme options.
@@ -20,7 +20,7 @@ if exists("g:briofita_support_version")
     finish
 endif
 
-let g:briofita_support_version = "2.0.1"
+let g:briofita_support_version = "2.0.2"
 
 let s:briofita_root_menu = 'Plugin.Briofita\ Colorscheme\ Support.'
 

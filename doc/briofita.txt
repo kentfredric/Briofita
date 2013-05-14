@@ -7,7 +7,7 @@
 |              |  Only a few users will need to read the help items -- the   |
 |              |  author supposes -- because there are suitable defaults.    |
 |              +-------------------------------------------------------------+
-|              |  `Briofita`  version   v2.0.1                                 |
+|              |  `Briofita`  version   v2.0.2                                 |
 |              |  Author:   Sergio Nobre (sergio.o.nobre at gmail dot com)   |
 |              |  Licence:  The VIM LICENCE applies to Briofita.             |
 +--------------+-------------------------------------------------------------+
@@ -236,10 +236,7 @@ Implemented functions:
 	  current colorscheme is Briofita (the text below has been broken into
 	  more than one line for an easier reading of this help file):
 >
-        'Briofita v2.0.1
-		    User parms: { localcursorline cursorlinenr foldcolumn
-			              nodistractionmode normal special vimgroup statusline
-						  conceal search folded cursorline colorcolumn }
+        'Briofita v2.0.2
 			Curr.Settings{
 			     *ColorColumn[0-3]=0
 				 *CursorLine[0-8]=8
@@ -248,9 +245,9 @@ Implemented functions:
 				 *Search[0-5]=5
 				 *Folded[0-4]=0 }'
 <
-    . Shown above: the Briofita version number, the allowed parameters and
-	  the current options for the parameters having these names: "colorcolumn",
-	  "cursorline", "cursorlinenr", "normal", "search" and "folded".
+    . Shown above: the Briofita version number and the current options for
+	  the parameters having these names: "colorcolumn", "cursorline",
+	  "cursorlinenr", "normal", "search" and "folded".
 
 	. Expressions like
 >
@@ -420,7 +417,7 @@ below (see |briofita-options-description|).
 5.1                                     {{{2              *briofita-parameters*
 PARAMETERS~
 
-A global dictionary is provided for most of the user assignamble parameters.
+A global dictionary is provided for most of the user-assignable parameters.
 Check the Vim help about dictionaries, if necessary:
 >
 	:help Dictionaries
@@ -824,6 +821,9 @@ Note: As a general rule only the most recent versions of Briofita will be
 
 
 ------------------------------------------------------------------------------
+
+v2.0.2 (May, 2013)~
+    - Changed the default for Search highlight. Cleaned plugin and help files.
 
 v2.0.1 (May, 2013)~
     - Code cleaning. Bug fix: corrected some leftovers from previous development.
