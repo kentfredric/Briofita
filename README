@@ -6,123 +6,51 @@ This is a mirror of http://www.vim.org/scripts/script.php?script_id=4136
 *  Java         http://i47.tinypic.com/281sx3t.png
 *  Python     http://i50.tinypic.com/33cb149.png 
 
+Note: The above screenshots are from a previous release.
+
 ===========  Applications  ======================================
 Some of the supported programming languages and markup tools:
+
 * Java,Javascript,Perl,Python,Ruby,Shellscript,SQL,PL/SQL,Vimscript,C/C++
 * Asciidoc,Fountain,Markdown
 * CSS,HTML/XHTML,XML
 
 ==========         Notes      =====================================================================
 
-Briofita is a color scheme whose background shows by default a shaded dark green color. Different file types may 
-have different renderings for similar items; different items stand out by having different colors. It has many highlights 
-for common programming languages and text mark-up schemes. Some high contrast colors (like red or orange), 
-underlined or reversed text are used in a few items in each syntax (for example, Python indentation errors are 
-shown in orange). 
+Briofita is a color scheme whose background shows by default a shaded dark green color. Different file types may
+have different renderings for similar items; different items stand out by having different colors. It has many highlights
+for common programming languages and text mark-up schemes. It is recommended both for low-light and normal-light
+conditions. Some high contrast colors like red or orange, and underlined or reversed text, are used in a few items in
+each syntax.
 
-Global variable options allow alternatives to the default ColorColumn, Normal and CursorLineNr highlights. There are
-coupled settings for CursorLine/CursorColumn and Search/DiffText. All options are defined via numeric parameters 
-designed to enable user functions or plugins to easily make option "rotation" by clicking on menus or toolbar buttons.
+Initially based on Moss (vimscript #2779), with some ideas coming from Distinguished (vimscript #3529), the
+current release departs a lot from its origins.
 
-Originally this color scheme was just a tweaked version of Moss (vimscript #2779), with few changes for personal 
-preferences; inspired by other favorite color schemes, other features were added along the time; then it was 
-restructured to use a color dictionary similar to the one used by the Distinguished color scheme (vimscript #3529).
+A global dictionary allows alternatives to some default highlights, with a few coupled settings.
+All options are defined via numeric parameters designed to enable user functions or plugins to
+easily make option "rotation" by clicking on menus or toolbar buttons.
 
-Any feedback is welcome. 
+Please notice that all the development and testing efforts took place under Linux. 
+
+Any feedback is welcome. (Our fellow vimmers will benefit if you remember to "rate this script"...)
+
+
+==========        Help      =================================================================================
+Technical details (and the release history) were previously here in the Vim Online page.
+They have now been moved into the companion help file.
+Do ":help briofita" to read the help.
 
 ==========        Options      =================================================================================
-Most users will not need to use the options provided by the color scheme, since there are appropriate defaults. 
-But those who want may try and change the highlight groups via the numeric choices shown below. Typically the 
-commands with the user choices will be placed in the '.vimrc' file.
-For the CursorLine settings I recommend that you create toolbar buttons (or menu entries) so that each time you 
-click on them a new option is in effect for the current tabpage. Such that you have a quick and easy rotation 
-between these settings. These tabpage settings will be easier if you use the TabPageColorscheme 
-plugin (vimscript #3358). (For creating menus or toobar buttons look at Vim ':help creating-menus' or ':help gui-toolbar'.)
+Most users will not need to use the options provided by the color scheme, since 
+there are appropriate defaults, they just need to do ":color briofita" on the Vim command-line for a start.
+But those users who want may try and change the highlight groups via numeric choices.
+Please check the help file for details.
 
-==========        ColorColumn Highlight Options     ==============================================================
-Option Variable:  'g:Briofita_choice_for_colorcolumn'
- (For an explanation of ColorColumn check ":help colorcolumn". )  Its color may be changed with the options below:
-  0 --> ColorColumn background is #294C44 (green; DEFAULT)
-  1 --> if the CursorLine option does not have Black background (if it is not 8), then ColorColumn will have the SAME background;
-           otherwise the ColorColumn will be almost hidden in the background.
-  2 --> ColorColumn background is #004F4F (sort of green with some blue touch)
+==========        Plugin      =================================================================================
+An example plugin is provided: briofita-support.vim.
+It has an example of a function that commands the cycling of the CursorLine
+highlight. And another example function can be called to create a menu that performs some useful operations.
+ (Some menu entries assume you have installed the "tabpagecolorscheme" plugin, vimscript #3358).
+For more details please check the help file.
 
-========               Search  Highlight Options       ================================================================
-Option Variable:  'g:Briofita_choice_for_search'
-This allows you to change the highlight style of the normal mode star (*) and search (/) commands, for example.  
-Notice that there are a few settings for DiffText highlight coupled with this variable (try this and let me know your suggestions
-for change or improvements in a future release). I prefer the Search highlight to be VERY contrasting, so "0" is the default. 
-But you may change this with the options below:
-  0 --> sort of gold foreground, and bright red background (DEFAULT)
-  1 --> equal to the above default (in this release)
-  2 --> sort of gold foreground, dark red background
-  3 --> sort of light green background 
-  4 --> sort of green foreground, bright yellow/green background 
-  5 --> underlined rose text
-
-==========          Normal Highlight Options    ===================================================================
-Option Variable: 'g:Briofita_choice_for_normalcolor'
-This is the highlight group for the common text. When the file you are  currently editing has a syntax that makes 
-TOO MUCH text  to be "Normal" you may want something different from the default. 
-Sometimes I use options  1 or 2 below when there is no alternative for a poorly tested syntax.
-  0 --> sort of light purple/cyan foreground (DEFAULT)
-  1 --> very light green foreground (hacked from Moss colorscheme)
-  2 --> a weird color (amber? tangerine? carrot?... try yourself  and tell me...)
-
-=========            CursorLineNr    Highlight  Options      ============================================================
-Option Variable: 'g:Briofita_choice_for_cursorlinenr'
- Line number highlight, meaningful only for recent versions of Vim. Options:
-  0 --> orange (DEFAULT)
-  1 --> yellow
-
-=========       CursorLine  and  CursorColumn  Highlight  Options   ==================================================
-Option Variables:  'g:Briofita_choice_for_cursorline'    and    't:Briofita_choice_for_cursorline'
-These variables affect both CursorLine and CursorColumn highlights. If you do not usually have 'cursorline' or 
-'cursorcolumn' set in your Vim, you may skip this. The two variables above (notice that their names differ only in the prefix)
-enable an easy change of the CursorLine and the CursorColumn style.
-** If you want the same CursorLine/CursorColumn style in all your tabpages, just set the "g:" variable above mentioned; 
-    do not set or change the "t:" variable.
-** If you want a different CursorLine/CursorColumn style for the current tabpage then do as follows:
-        --------------------------------------------------------------------------------------------------------------------------------
-        set t:Briofita_choice_for_cursorline=3        ====> FOR THE TABPAGE WHERE YOU ARE
-        set g:Briofita_choice_for_cursorline=(-1)   ====> ONLY ONCE
-        --------------------------------------------------------------------------------------------------------------------------------
-The options are:
-   0 --> #333399  (blue background, DEFAULT)
-   1 --> #3A5022  (green background)
-   2 --> #880c0e  (red background)
-   3 --> Navy Blue background
-   4 --> Dark Magenta background
-   5 --> Saddle Brown background
-   6 --> #333399 (same background as in option 0; but white foreground, and line without syntax colors)
-   7 --> #3A5022 (same background as in option 1; but white foreground, and line without syntax colors)
-   8 --> Black background, green foreground, underlined; line without syntax colors
-
-==========           Example            ==============================================================
-Issue the command below in Vim command line. It changes the Search highlight to use a different red background, 
-not so bright as the default:
-        	----------------------------------------------------------------
-	        	     :g:Briofita_choice_for_search = 2
-        	---------------------------------------------------------------
-Notice that the effect of this command may not be immediate because the color scheme is not aware of command line 
-events. You may need to source it with the command ':colorscheme briofita'; if you used the TabPageColorscheme 
-plugin to set it as a local tab color, it may be re-sourced by clicking on another tabpage and then clicking back on 
-the original tab. (This is just an example for the command line. The proper place for settings like these is in a script like .vimrc).
-
-=====  v1.5.0+   ===========================================================================================
-                 A string with the colorscheme version number is shown if you issue a command like this example:
-                                        :echo g:BriofitaVersion()
-                 If Briofita is the current color, some parameter information is shown, too.
-=====  v1.5.0+   ===========================================================================================
-                 Some support for distraction-less editing has been added. In this mode some visual elements have low visibility or are
-                 almost hidden. Although you will likely need companion settings with commands like :set nonumber (and others) in 
-                 your .vimrc (or in a plugin, not yet provided). Here is an example of usage:
-                                                                      :let t:Briofita_no_distraction_mode=0                        (accepted values: 0 or 1)
-                 * Then do 
-                                                                       :colorscheme briofita                                                   (to reload the colorscheme);
-                 * When done (BEFORE proceeding to normal mode editing):
-                                           ** either (in the same tab) DELETE it with  :unlet  t:Briofita_no_distraction_mode
-                                           ** or CLOSE the tabpage. 
-                                           ** reload the colorscheme again
-                 Note: The examples use the command line, but the recommended usage is in scripts (.vimrc/.gvimrc, function, map or plugin). 
 ==========================================================================================================
