@@ -7,7 +7,7 @@
 |              |  Only a few users will need to read the help items -- the   |
 |              |  author supposes -- because there are suitable defaults.    |
 |              +-------------------------------------------------------------+
-|              |  `Briofita`  version   v2.0.0                                 |
+|              |  `Briofita`  version   v2.0.1                                 |
 |              |  Author:   Sergio Nobre (sergio.o.nobre at gmail dot com)   |
 |              |  Licence:  The VIM LICENCE applies to Briofita.             |
 +--------------+-------------------------------------------------------------+
@@ -236,7 +236,7 @@ Implemented functions:
 	  current colorscheme is Briofita (the text below has been broken into
 	  more than one line for an easier reading of this help file):
 >
-        'Briofita v2.0.0
+        'Briofita v2.0.1
 		    User parms: { localcursorline cursorlinenr foldcolumn
 			              nodistractionmode normal special vimgroup statusline
 						  conceal search folded cursorline colorcolumn }
@@ -824,6 +824,9 @@ Note: As a general rule only the most recent versions of Briofita will be
 
 
 ------------------------------------------------------------------------------
+
+v2.0.1 (May, 2013)~
+    - Code cleaning. Bug fix: corrected some leftovers from previous development.
 
 v2.0.0 (May, 2013)~
     - Increased major number due to the change in global parameter names. They

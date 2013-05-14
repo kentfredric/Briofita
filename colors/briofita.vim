@@ -2,14 +2,14 @@
 " Name:        Briofita
 " Scriptname:  briofita.vim
 " Author:      Sergio Nobre <sergio.o.nobre@gmail.com>
-" Last Change: May 13th, 2013
+" Last Change: May 14th, 2013
 " =============================================================================        {{{1
 let this_color = "briofita"
 if (!has('gui_running')) || (!v:version >= 703)
     echoerr "Colorscheme ".this_color." was designed only for Vim versions >= 7.3.0 in GUI mode."
     finish
 endif
-let s:briofitaVersion= "2.0.0"
+let g:briofitaversion = "2.0.1"
 set background=dark
 hi clear
 if exists("syntax_on")

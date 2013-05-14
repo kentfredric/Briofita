@@ -1,11 +1,8 @@
 " ----------------------------------------------------------------------------
 "   Plugin:    briofita-support
 "   Author:    Sergio O. Nobre
-"   Date:      May 13, 2013
-"   Version:   2.0.01
-"              As this plugin is being released with the colorscheme, the
-"              same version number is used, with an added suffix ".nn" (a two
-"              digit number at the end).
+"   Date:      May 14, 2013
+"   Version:   2.0.1
 "   Purpose:   Interface for the use and customization of the Briofita colorscheme.
 "              This plugin makes it easier for the user to make
 "              a rotation scheme ("cycle") with the colorscheme options.
@@ -23,24 +20,24 @@ if exists("g:briofita_support_version")
     finish
 endif
 
-let g:briofita_support_version = "2.0.01"
+let g:briofita_support_version = "2.0.1"
 
 let s:briofita_root_menu = 'Plugin.Briofita\ Colorscheme\ Support.'
 
-" function! g:BriofitaVersion()   " {{{1
+" function!   g:BriofitaVersion()   " {{{1
 if !exists ("*g:BriofitaVersion")
     function! g:BriofitaVersion()
         " this function returns an string with Briofita version # and other information.
         " USAGE: echo g:BriofitaVersion(), or echomsg g:BriofitaVersion()
-        if exists('g:s_briofitaVersion')
-            let g:s_briofitainfo  = "'Briofita v".g:s_briofitaVersion
+        if exists('g:briofitaversion')
+            let s:briofitainfo  = "'Briofita v" . g:briofitaversion
         else
-            let g:s_briofitainfo  = "'Briofita colorscheme is not loaded.'"
-            return(g:s_briofitainfo)
+            let s:briofitainfo  = "'Briofita colorscheme is not loaded.'"
+            return(s:briofitainfo)
         endif
         if !exists('g:colors_name')
-            let g:s_briofitainfo .= "'"
-            return(g:s_briofitainfo)
+            let s:briofitainfo .= "'"
+            return(s:briofitainfo)
         endif
         let t:briofitainitialtabcolor = "(unknown color)"
         try
@@ -54,90 +51,74 @@ if !exists ("*g:BriofitaVersion")
         catch
             let t:briofitainitialtabcolor = "(undefined color?)"
         endtry
-        let g:s_briofitafirst = 0
+        let s:briofitafirst = 0
         if g:colors_name =~ "briofita"
-            let g:s_briofitafirst = 1
+            let s:briofitafirst = 1
         elseif exists('t:colorscheme')
             if t:colorscheme =~ "briofita"
-                let g:s_briofitafirst = 2
+                let s:briofitafirst = 2
             endif
         endif
-        if !g:s_briofitafirst
+        if !s:briofitafirst
             if (tabpagenr("$") == 1)
-                let g:s_briofitainfo .= " -- non-Briofita color currently loaded="
+                let s:briofitainfo .= " -- non-Briofita color currently loaded="
             else
-                let g:s_briofitainfo .= " -- current tab (".tabpagenr().") has non-Briofita color="
+                let s:briofitainfo .= " -- current tab (".tabpagenr().") has non-Briofita color="
             endif
-            let g:s_briofitainfo .= t:briofitainitialtabcolor
-            let g:s_briofitainfo .= "'"
+            let s:briofitainfo .= t:briofitainitialtabcolor
+            let s:briofitainfo .= "'"
             " Briofita is not the current colorscheme: just return name and version
-            return(g:s_briofitainfo)
+            return(s:briofitainfo)
         endif
 
-        " NOTE: flags '_' set by the user; '*' set by colorscheme (default)
-        let g:s_parmsfound = 0
-        let g:s_parmslisted = ""
-        if !empty(g:s_userchoicesList)
-            for choice in g:s_userchoicesList
-                if len(choice)
-                    let g:s_parmslisted .= " " . choice
-                    let g:s_parmsfound += 1
-                endif
-            endfor
-        endif
-        let g:s_briofitainfo .= " User parms:"
-        let g:s_briofitainfo .= " { "
-        let g:s_briofitainfo .= g:s_parmslisted
-        let g:s_briofitainfo .= " } "
+        let s:briofitainfo .= " Curr.Settings{"
 
-        let g:s_briofitainfo .= " Curr.Settings{"
-
-        if g:s_dict_conf_options.colorcolumn[0] == 3
+        if g:briofita_parms.colorcolumn[0] == 3
             " NOTE: 3 means distractionless editing
-            let g:s_briofitainfo .= " *NoDistractionMode* "
+            let s:briofitainfo .= " *NoDistractionMode* "
         else
-            let g:s_briofitainfo .= " *ColorColumn[0-"
-                         \      . g:s_dict_conf_options.colorcolumn[1] .  "]="
-                         \      . g:s_dict_conf_options.colorcolumn[0]
-            if g:s_dict_conf_options.colorcolumn[0] == 1
-                let g:s_briofitainfo .= " (cc will use cul color) "
+            let s:briofitainfo .= " *ColorColumn[0-"
+                         \      . g:briofita_parms.colorcolumn[1] .  "]="
+                         \      . g:briofita_parms.colorcolumn[0]
+            if g:briofita_parms.colorcolumn[0] == 1
+                let s:briofitainfo .= " (cc will use cul color) "
             endif
-            let g:s_briofitainfo .= " *CursorLine[0-"
-                         \      . g:s_dict_conf_options.cursorline[1] .  "]="
-                         \      . g:s_dict_conf_options.cursorline[0]
+            let s:briofitainfo .= " *CursorLine[0-"
+                         \      . g:briofita_parms.cursorline[1] .  "]="
+                         \      . g:briofita_parms.cursorline[0]
             if exists("t:briofita_choice_for_cursorline")
-                let g:s_briofitainfo .= " CurTab(CursorLine)="
+                let s:briofitainfo .= " CurTab(CursorLine)="
                              \ . t:briofita_choice_for_cursorline
             endif
         endif
 
-        let g:s_briofitainfo .= " *CursorLineNr[0-"
-                         \      . g:s_dict_conf_options.cursorlinenr[1] .  "]="
-                         \      . g:s_dict_conf_options.cursorlinenr[0]
+        let s:briofitainfo .= " *CursorLineNr[0-"
+                         \      . g:briofita_parms.cursorlinenr[1] .  "]="
+                         \      . g:briofita_parms.cursorlinenr[0]
 
-        let g:s_briofitainfo .= " *Normal[0-"
-                         \      . g:s_dict_conf_options.normal[1] .  "]="
-                         \      . g:s_dict_conf_options.normal[0]
+        let s:briofitainfo .= " *Normal[0-"
+                         \      . g:briofita_parms.normal[1] .  "]="
+                         \      . g:briofita_parms.normal[0]
 
-        let g:s_briofitainfo .= " *Search[0-"
-                         \      . g:s_dict_conf_options.search[1] .  "]="
-                         \      . g:s_dict_conf_options.search[0]
+        let s:briofitainfo .= " *Search[0-"
+                         \      . g:briofita_parms.search[1] .  "]="
+                         \      . g:briofita_parms.search[0]
 
-        let g:s_briofitainfo .= " *Folded[0-"
-                         \      . g:s_dict_conf_options.folded[1] .  "]="
-                         \      . g:s_dict_conf_options.folded[0]
+        let s:briofitainfo .= " *Folded[0-"
+                         \      . g:briofita_parms.folded[1] .  "]="
+                         \      . g:briofita_parms.folded[0]
 
-        let g:s_briofitainfo .= " }"
+        let s:briofitainfo .= " }"
 
         let t:briofitanumtabs = tabpagenr("$")
         if (t:briofitanumtabs == 1)
-            let g:s_briofitainfo .= " -- curr.color=" . t:briofitainitialtabcolor
-            let g:s_briofitainfo .= "'"
+            let s:briofitainfo .= " -- curr.color=" . t:briofitainitialtabcolor
+            let s:briofitainfo .= "'"
         endif
-        let g:s_briofitainfo .= "'"
-        unlet! g:s_briofitafirst
-        return(g:s_briofitainfo)
-        " end of BriofitaVersion()
+        let s:briofitainfo .= "'"
+        unlet! s:briofitafirst
+        return(s:briofitainfo)
+        " end of function BriofitaVersion()
     endfunction
 endif
 
@@ -290,16 +271,11 @@ endfunction
 function! g:BriofitaInterfaceVars()    " {{{1
     " shows g: or t: variables which the user uses to set the colorscheme options
     if exists("g:briofita_parms") ||
-     \ exists("g:s_dict_conf_options") ||
      \ exists("t:briofita_choice_for_cursorline")
         echomsg '*** Briofita Colorscheme Interface Variables:'
         if exists("g:briofita_parms")
             echomsg '  * g:briofita_parms:'
             echomsg '   ' . string(g:briofita_parms)
-        endif
-        if exists("g:s_dict_conf_options")
-            echomsg '  * g:s_dict_conf_options:'
-            echomsg '   ' . string(g:s_dict_conf_options)
         endif
         if exists("t:briofita_choice_for_cursorline")
             echomsg '  * t:briofita_choice_for_cursorline = ' .
