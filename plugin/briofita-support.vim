@@ -1,18 +1,19 @@
 " ----------------------------------------------------------------------------
-"   Plugin:    briofita-support
-"   Author:    Sergio O. Nobre
-"   Date:      May 14, 2013
-"   Version:   2.0.2
-"   Purpose:   Interface for the use and customization of the Briofita colorscheme.
-"              This plugin makes it easier for the user to make
-"              a rotation scheme ("cycle") with the colorscheme options.
-"   Note:      This plugin serves as an example of how the user's plugins,
-"              maps or menus may customize Briofita's behavior.
-"              Although other options are supported, the plugin was tested
-"              only for the cycling of the cursorline/cursorcolumn option.
-"              This is an early
-"   Copyright: Copyright (C) 2013 Sergio O. Nobre
-"   Licence:   The same as Vim licence.
+"   Name:        briofita-support
+"   Scriptname:  briofita-support.vim
+"   Author:      Sergio Nobre <sergio.o.nobre@gmail.com>
+"   Copyright:   Copyright (C) 2013 Sergio O. Nobre
+"   License:     The Vim licence (just change "Vim" to "Briofita").
+"   Website:     http://www.vim.org/scripts/script.php?script_id=4136
+"   Last Change: May 19th, 2013
+"   Version:     2.0.3
+"   Purpose:     This plugin serves as an example of how the user's plugins,
+"                maps or menus may customize Briofita's colorscheme behavior.
+"                It has examples for cycling of the cursorline/cursorcolumn option,
+"                and builds a demonstration menu with a few colorscheme-related operations.
+"   Note:        For explanations, usage help and the release history please
+"                check the companion help file. For know about new versions
+"                access the above web address.
 " ----------------------------------------------------------------------------
 
 " check whether this script is already loaded
@@ -20,7 +21,7 @@ if exists("g:briofita_support_version")
     finish
 endif
 
-let g:briofita_support_version = "2.0.2"
+let g:briofita_support_version = "2.0.3"
 
 let s:briofita_root_menu = 'Plugin.Briofita\ Colorscheme\ Support.'
 

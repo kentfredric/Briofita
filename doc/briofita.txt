@@ -7,7 +7,7 @@
 |              |  Only a few users will need to read the help items -- the   |
 |              |  author supposes -- because there are suitable defaults.    |
 |              +-------------------------------------------------------------+
-|              |  `Briofita`  version   v2.0.2                                 |
+|              |  `Briofita`  version   v2.0.3                                 |
 |              |  Author:   Sergio Nobre (sergio.o.nobre at gmail dot com)   |
 |              |  Licence:  The VIM LICENCE applies to Briofita.             |
 +--------------+-------------------------------------------------------------+
@@ -62,12 +62,23 @@ restructured to use a color dictionary similar to the one used by the
 Briofita is NOT a minimalist colorscheme. It has MANY highlights.
 In designing it the author tried to cover a lot of syntaxes, targeted for
 work or study or research. Naturally the most tested ones were those of daily
-use but all have had a special touch.
+use but all have had a special touch. (Note that the part of Briofita that
+implements distraction-less editing is still experimental.)
 
 This colorscheme was not designed for color blinded people: it has many
 highlights which use red, for example. And, too, it is not recommended
 for use in systems which are low in memory or have older CPUs, due to having
 an unusually high number of highlights.
+
+Currently Briofita is released with two companion files besides the
+colorscheme: a help file and an example plugin ("briofita-support").
+
+The author uses and recommends the Vim plugin "tabpagecolorscheme"
+(vimscript #3358, http://www.vim.org/scripts/script.php?script_id=3358). It
+allows a different colorscheme to be active in each tabpage. The Briofita
+companion plugin, briofita-support, has an example of calling a command of
+the tabpagecolorscheme plugin. (There is no problem if you have Briofita active
+in more than one tabpage.)
 
 New releases of Briofita can be downloaded from its page in the Vim online site:
         http://www.vim.org/scripts/script.php?script_id=4136.
@@ -87,13 +98,13 @@ for Briofita because a need was felt for something like a usage guide for
 those users who would want to use its global parameter variables to customize
 its behavior.
 
-Briofita had no user help before version v2.0.0. The help was provided only by
-a few entries in its Vim site page. But the online text was difficult to
-maintain as new versions were released, so it was decided to put them in a
-separate file.
+Briofita had no user help before version 2, just some explanations provided
+by a few entries in its Vim website page. But the online text became difficult
+to maintain as new versions were released, so it was decided to put that text
+in a separate file.
 
-All technical details have been deleted from the Vim site page which now refers
-the reader to this help for further information.
+All technical details have been deleted from the Vim Online page for Briofita.
+The webpage now refers the reader to this Vim helpfile for further information.
 
                                                                            |TOC|
 
@@ -156,7 +167,7 @@ INSTALLATION                           {{{1              *briofita-installation*
 
 NOTE: Up to now Briofita has been tested only on Unix / Linux.
 
-Briofita is released as a packed file.
+Briofita is released as a packed file (zip).
 
 Just unpack it and move the files from the "colors", "doc" and "plugin"
 directories into the respective directories of your ".vim" directory.
@@ -165,17 +176,27 @@ In case you use Pathogen (ou similar bundle-based plugins) create a
 ".vim/bundle/briofita" directory and move the directory tree of the
 unpacked file into it.
 
-Do :helptags (for Pathogen users, :Helptags) after installation.
+Then do ":helptags" (for Pathogen users, ":Helptags").
 
-After moving the files, edit your ".vimrc" to add the parameters you like,
-and restart Vim.
-
-To verify your first installation, open another instance of GUI Vim and execute
-the following commands:
+Read the hints about using Briofita and its customization parameters in the
+help file:
 >
-			:tab help briofita
+			:help briofita
+<
+Edit your ".vimrc" file to add the parameters you like.
+
+Then open another instance of GUI Vim and execute the following command:
+>
 			:color briofita
 <
+If you have installed the TabPageColorscheme plugin, which is recommended, the
+command above may be replaced by the following one:
+>
+ 			:Tcolorscheme briofita
+<
+You may add one of the above commands to your ".vimrc" so that Briofita will
+be active at start-up, automatically.
+
                                                                            |TOC|
 
 
@@ -221,7 +242,7 @@ Implemented functions:
 
 	  auxiliary function that builds a menu that has entries for showing
 	  parameters, cycling, etc.; by default the menu is inserted into the
-	  Plugin main menu.
+	  Plugin root menu.
 
 	g:BriofitaVersion()~
 
@@ -236,7 +257,7 @@ Implemented functions:
 	  current colorscheme is Briofita (the text below has been broken into
 	  more than one line for an easier reading of this help file):
 >
-        'Briofita v2.0.2
+        'Briofita v2.0.3
 			Curr.Settings{
 			     *ColorColumn[0-3]=0
 				 *CursorLine[0-8]=8
@@ -282,11 +303,12 @@ NOTE: This feature is yet in an early stage of development. Let me know of
       any bug or malfunction.
 
 Tabpagecolorscheme plugin~
-I have the Tabpagecolorscheme plugin installed and I recommend it. It makes
-your tabpages "remember" their colorscheme. NOTE that below tabpage-related
-examples assume you have the Tabpagecolorscheme plugin installed.
+The Tabpagecolorscheme plugin is recommended. It makes your tabpages "remember"
+their colorscheme. Get it from the Vim site:
+http://www.vim.org/scripts/script.php?script_id=3358. NOTE that some examples
+given here assume you have that plugin installed.
 
-Variable t:briofita_no_distraction_mode~
+Variable t:briofita_nodistractionmode~
 This is the commanding variable for this mode. There are only TWO possible
 values for this variable. Zero makes the highlights used for this mode to have
 the typical Briofita background style. One makes the background be black.
@@ -342,7 +364,7 @@ example of distractionless editing.
     colorscheme:
 >
          :tabnew
-         :let t:briofita_no_distraction_mode=0
+         :let t:briofita_nodistractionmode=0
          :colorscheme briofita
 <
 
@@ -352,7 +374,7 @@ example of distractionless editing.
 
      - either (in the same tab) DELETE the global variable:
 >
-         :unlet t:briofita_no_distraction_mode
+         :unlet t:briofita_nodistractionmode
 <
      - or CLOSE the tabpage (this will bring you to another tab, or to the
 	   remaining tab):
@@ -479,7 +501,7 @@ Just
 >
 	:call BriofitaMenu()
 <
-or put this command in your .gvimrc.
+or put this command in your ".gvimrc".
 
 NOTE: There is a customization variable for positioning the menu built by
 the plugin, "g:briofita_root_menu". If not specified, the plugin inserts
@@ -514,12 +536,12 @@ with the command
 >
         :colorscheme briofita.
 <
-It is recommended to use the TabPageColorscheme plugin (at least I use it!).
-In this case re-source the colorscheme by clicking on another tabpage and then
-click back on the original tab.
+It is recommended to use the TabPageColorscheme plugin. If so re-source the
+colorscheme by clicking on another tabpage and then click back on the original
+tab.
 
-(The proper place for settings like the above example is in a script,
-or in youer .vimrc file).
+(Command line examples above are just examples. The ideal place for settings
+like these would be in a Vimscript, or in your ".vimrc" file).
                                                                            |TOC|
 
 
@@ -604,6 +626,15 @@ Note: This option is related to the search operations in Vim. Check Vim Help:
 >
                 :help usr_27.
 <
+      Notice that the Search highlight may be shown or hidden, depending on
+	  some conditions. Read the below topics on the Vim Help:
+>
+				:help 'hlsearch
+				:help :nohlsearch
+<
+	  All the explanation in this section assumes that the boolean option
+	  'hlsearch is ON. If you normally do not use the 'hlsearch option (if it
+	  is OFF) you may SKIP this topic.
 ------------------------------------------------------------------------------
 
 Option Applies To: Search highlight
@@ -662,11 +693,11 @@ convenience.
 CURSORLINENR~
 
 ------------------------------------------------------------------------------
-Note: This option is related to the Vim 'number' setting. Check Vim Help:
+Note: This option is related to the Vim 'number' option. Check Vim Help:
 >
                 :help 'number.
-<     If you do NOT want line numbering in your editing sessions, you may SKIP
-      this section.
+<     If you do NOT usually have line numbering in your editing sessions, you
+      may SKIP this section.
 ------------------------------------------------------------------------------
 
 Option Applies To: CursorLineNr highlight
@@ -686,16 +717,19 @@ the range shown by this list: [0,1].
 7.5                                    {{{2                *briofita-cursorline*
 CURSOR LINE~
 LOCAL CURSOR LINE~
+CURSOR COLUMN~
 
 ------------------------------------------------------------------------------
-Note: For an explanation of Cursor Line check Vim Help:
+Note: cursorline and cursorcolumn are Vim boolean options which you may or may
+      not use. For an explanation of them check Vim Help:
 >
-                :help 'cursorline.
+                :help 'cursorline
+                :help 'cursorcolumn
 <     If you do NOT usually have 'cursorline' or 'cursorcolumn' set in your
       Vim, you may SKIP this section.
 ------------------------------------------------------------------------------
 
-Option Applies To: CursorLine highlight
+Option Applies To: CursorLine and CursorColumn highlights
 
 Option Variables:
                    g:briofita_parms['cursorline']
@@ -789,9 +823,9 @@ with no problem.)
 9
 ISSUES                                 {{{1              *briofita-known-issues*
 
-Briofita Companion Vim Help~
+Vim Help File Editing~
 
-When you are editing a help file of yours which has a modeline that
+When you are editing a Vim help file of yours which has a modeline that
 specifies 'ft=help', and then you do ':tab help some-other-help-item' which is
 located in another help file, the text of the second help will be shown as if
 it were being edited too (in insert mode, syntax elements HelpBar/HelpStar are
@@ -821,6 +855,12 @@ Note: As a general rule only the most recent versions of Briofita will be
 
 
 ------------------------------------------------------------------------------
+
+v2.0.3 (May, 2013)~
+	- Reduced contrasting background in a few highlights of these syntaxes:
+	  Sql,PL/SQL,Fountain,Vim Language.
+	- Increased contrasting background of the IncSearch highlight.
+	- Corrections and improvements in the help text.
 
 v2.0.2 (May, 2013)~
     - Changed the default for Search highlight. Cleaned plugin and help files.
@@ -858,8 +898,7 @@ v1.5.0 (August, 2012)~
 	  colorscheme version number is shown if you issue a command like this:
 	  ":echo g:BriofitaVersion()". If Briofita is the current color, some
 	  parameter information is shown, too.
-	- Added parameter variable 't:briofita_no_distraction_mode' for
-	  distractionless editing mode.
+	- Added a parameter variable for distractionless editing mode.
 	- ColorColumn option now accepts 3, meaning 'do not set usual ColorColumn
 	  highlight' for that mode.
 	- All options defaults are now zero.

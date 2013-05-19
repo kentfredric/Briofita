@@ -2,14 +2,20 @@
 " Name:        Briofita
 " Scriptname:  briofita.vim
 " Author:      Sergio Nobre <sergio.o.nobre@gmail.com>
-" Last Change: May 14th, 2013
+" Copyright:   Copyright (C) 2013 Sergio O. Nobre
+" License:     The Vim licence (just change "Vim" to "Briofita").
+" Website:     http://www.vim.org/scripts/script.php?script_id=4136
+" Last Change: May 19th, 2013
+" Note:        For explanations, usage help and the release history please
+"              check the companion help file. For know about new versions
+"              access the above web address.
 " =============================================================================        {{{1
 let this_color = "briofita"
 if (!has('gui_running')) || (!v:version >= 703)
     echoerr "Colorscheme ".this_color." was designed only for Vim versions >= 7.3.0 in GUI mode."
     finish
 endif
-let g:briofitaversion = "2.0.2"
+let g:briofitaversion = "2.0.3"
 set background=dark
 hi clear
 if exists("syntax_on")
@@ -947,8 +953,9 @@ let s:dict_hi_sql = {
     \   "plsqlCommentL"                         : [ "#5D8B9C", "",  ""],
     \   "plsqlConditional"                      : [ "PowderBlue","",""],
     \   "plsqlErrInBracket"                     : [ "RosyBrown", "",  ""],
+    \   "plsqlErrInParen"                       : [ "#7EB49C", "", "bold"],
     \   "plsqlFunction"                         : [ "#CC4455", "",  ""],
-    \   "plsqlGarbage"                          : [ "Red", "bg",  "bold"],
+    \   "plsqlGarbage"                          : [ "#7EB49C", "", ""],
     \   "plsqlHostIdentifier"                   : [ "#779DB2", "#1C3644",  ""],
     \   "plsqlIdentifier"                       : [ "#2FBBA6","",""],
     \   "plsqlIntLiteral"                       : [ "#7FAAF2", "#1C3644", ""],
@@ -956,9 +963,9 @@ let s:dict_hi_sql = {
     \   "plsqlOperator"                         : [ "RosyBrown", "",  "bold,italic"],
     \   "plsqlPseudo"                           : [ "SlateBlue1", "",  ""],
     \   "plsqlRepeat"                           : [ "PaleGreen2", "#1c3644",  ""],
-    \   "plsqlSQLKeyword"                       : [ "Orange", "DarkSlateGrey", "bold" ],
-    \   "plsqlSQLKeyword2"                      : [ "#2FBBA6","","bold"],
-    \   "plsqlSQLKeyword3"                      : [ "#7EB49C", "", "italic"],
+    \   "plsqlSQLKeyword"                       : [ "Orange", "DarkSlateGrey", "" ],
+    \   "plsqlSQLKeyword2"                      : [ "#2FBBA6","",""],
+    \   "plsqlSQLKeyword3"                      : [ "#7EB49C", "", ""],
     \   "plsqlSQLKeyword4"                      : [ "#C59F6F", "bg", "" ],
     \   "plsqlSQLTypeAttribute"                 : [ "#C59F6F", "bg", "underline" ],
     \   "plsqlStorage"                          : [ "CornFlowerBlue","",""],
@@ -966,15 +973,15 @@ let s:dict_hi_sql = {
     \   "plsqlStringLiteral"                    : [ "Aquamarine3", "",  "italic"],
     \   "plsqlSymbol"                           : [ "#8870FF","","bold"],
     \   "sqlHibSnippet"                         : [ "bg", "#7FAAF2", "bold"],
-    \   "sqlKeyword"                            : [ "#8FBFDC", "", "italic,underline"],
+    \   "sqlKeyword"                            : [ "#8FBFDC", "", ""],
     \   "sqlNumber"                             : [ "#85B2FE", "#1C3644", "italic"],
     \   "sqlOperator"                           : [ "#99AD6A", "",  ""],
     \   "sqlSnippet"                            : [ "PaleGreen3", "",  ""],
     \   "sqlSpecial"                            : [ "#99AD6A", "",  ""],
     \   "sqlStatement"                          : [ "PaleGreen3","","underline"],
-    \   "sqlString"                             : [ "#009F6F","","bold"],
+    \   "sqlString"                             : [ "#009F6F","",""],
     \   "sqlTodo"                               : [ "Wheat2", "#345FA8",  "italic"],
-    \   "sqlType"                               : [ "#00B880","","italic"],
+    \   "sqlType"                               : [ "#00B880","",""],
             \ }
 
 " Python                                            {{{2
@@ -1251,10 +1258,10 @@ let s:dict_hi_vimlang = {
     \   "vimFTOption"                           : [ "#779DB2", "",   "italic"],
     \   "vimFunc"                               : [ "White", "",   "bold"],
     \   "vimFuncBody"                           : [ "#779DB2", "",   "bold"],
-    \   "vimFuncKey"                            : [ "PowderBlue", "#1C3644", ""],
+    \   "vimFuncKey"                            : [ "LightCyan3", "", "bold"],
     \   "vimFuncName"                           : [ "#2FBBA6", "", "underline,italic"],
-    \   "vimFuncSID"                            : [ "SeaGreen3", "#1C4F4F", ""],
-    \   "vimFunction"                           : [ "PaleGreen2","#1C4F4F", ""],
+    \   "vimFuncSID"                            : [ "PowderBlue", "",  ""],
+    \   "vimFunction"                           : [ "LightCyan2","", ""],
     \   "vimFuncVar"                            : [ "SteelBlue3", "",  "underline,italic"],
     \   "vimGroup"                              : [ "SeaGreen3", "#1C3644", ""],
     \   "vimGroupList"                          : [ "#7EB49C", "", "italic"],
@@ -1315,7 +1322,7 @@ let s:dict_hi_vimlang = {
     \   "vimSpecial"                            : [ "#7FA2E6", "",  ""],
     \   "vimSubst"                              : [ "DeepSkyBlue2", "",  ""],
     \   "vimSubst1"                             : [ "#93BBBF", "",  ""],
-    \   "vimSubstDelim"                         : [ "RoyalBlue", "",  ""],
+    \   "vimSubstDelim"                         : [ "#57D700", "",  ""],
     \   "vimSubstFlagErr"                       : [ "Turquoise3", "",  ""],
     \   "vimSubstFlags"                         : [ "#009F6F","","bold,italic"],
     \   "vimSubstPat"                           : [ "PaleGreen3", "",  "bold"],
@@ -1355,13 +1362,14 @@ let s:dict_hi_other_plugins = {
     \   "dosIniLabel"                           : [ "SlateGray3", "",  "bold"],
     \   "dosIniNumber"                          : [ "SlateGray3", "",  ""],
     \   "fountainBold"                          : [ "LightCyan3", "#573D8C", ""],
-    \   "fountainCentered"                      : [ "#E7F56B", "#AD2728", ""  ],
-    \   "fountainCharacter"                     : [ "#FF88AA", "#573D8C", "italic"],
+    \   "fountainCentered"                      : [ "#E7F56B", "", ""  ],
+    \   "fountainCharacter"                     : [ "BurlyWood3", "", ""],
     \   "fountainDialogue"                      : [ "#8ecfbe", "", "italic"],
+    \   "fountainSceneHeading"                  : [ "#65C254", "",  "bold"],
     \   "fountainPageBreak"                     : [ "#556b2f", "", ""],
     \   "fountainParenthetical"                 : [ "#8B8B8B", "", ""],
     \   "fountainTitlePage"                     : [ "#bfaf69", "", "bold"],
-    \   "fountainTransition"                    : [ "#BAB585", "#573D8C", ""],
+    \   "fountainTransition"                    : [ "#BAB585", "", ""],
     \   "indentGuidesEven"                      : [ "", "#3D2B6B", ""],
     \   "indentGuidesOdd"                       : [ "", "#1c3644", ""],
     \   "listmaps_filename"					    : [ "#CBD234", "#564227",  ""],
@@ -1553,7 +1561,7 @@ let s:dict_hi_other = {
     \   "Ignore"                                : [ "Gray24", "",  ""],
     \   "Import"                                : [ "#cda869", "",  ""],
     \   "Include"                               : [ "DodgerBlue2", "",  ""],
-    \   "incSearch"                             : [ "Firebrick1", "",  "bold"],
+    \   "incSearch"                             : [ "Firebrick1", "Black",  "bold"],
     \   "Keyword"                               : [ "SeaGreen2", "",  ""],
     \   "Label"                                 : [ "#009F6F", "", ""],
     \   "Macro"                                 : [ "DodgerBlue2", "",  ""],
@@ -1659,7 +1667,6 @@ highlight SpellBad             guifg=fg         guibg=bg      gui=undercurl     
 highlight SpellLocal           guifg=fg         guibg=bg      gui=undercurl      guisp=fg
 highlight SpellRare            guifg=fg         guibg=bg      gui=undercurl      guisp=#C59F6F
 highlight netrwList            guifg=AquaMarine guibg=#880C0E gui=bold,undercurl guisp=SkyBlue2
-highlight fountainSceneHeading guifg=#D6B883    guibg=Grey40  gui=undercurl      guisp=SeaShell3
 "
 " Default highlights follow the non-default ones, below {{{1
 " Search Color: selection logic per global parameter briofita_choice_for_search {{{2
