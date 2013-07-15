@@ -1,56 +1,28 @@
 This is a mirror of http://www.vim.org/scripts/script.php?script_id=4136
 
-===========  Screenshots  ======================================
+Briofita is a complex dark background GUI colorscheme with highlights for common programming languages and light 
+mark-up tools, usable under both low-light and normal-light conditions. Although it is heavier than most common Vim 
+colorschemes it runs smoothly on current computers (at least I have been using it for the last two years with no issue).  
+
+Briofita implements colorscheme highlights for many syntax elements and fulfills study, research and work needs. A 
+global dictionary allows optional values to some syntax elements whose highlights may easily be changed either 
+manually or via plugins. The companion plugin provides GUI menus that make it easy to change Briofita settings, but the 
+colorscheme may be used without it. A Vim help file explains its history, usage and technical details.
+
+The current version of Briofita was tested only under GNU-Linux. The colorscheme does not use any special operating 
+system feature and should run properly under other environments, but the  plugin behavior under these systems is unknown.
+Any feedback is welcome.
+
+Our fellow vimmers will benefit if you remember to "rate this script"...
+
+
+===========  Screenshots  (from a previous version)  ============================
 *  Asciidoc  http://i49.tinypic.com/ndrp5.png
 *  C++          http://i45.tinypic.com/zbf3r.jpg 
 *  Java         http://i47.tinypic.com/281sx3t.png
 *  Python     http://i50.tinypic.com/33cb149.png 
 
-Note: The above screenshots are from a previous release.
-
 ===========  Applications  ======================================
-Some of the supported programming languages and markup tools:
-
-* Java,Javascript,Perl,Python,Ruby,Shellscript,SQL,PL/SQL,Vimscript,C/C++
-* Asciidoc,Fountain,Markdown
-* CSS,HTML/XHTML,XML
-
-==========         Notes      =====================================================================
-
-Briofita is a color scheme whose background shows by default a shaded dark green color. Different file types may
-have different renderings for similar items; different items stand out by having different colors. It has many highlights
-for common programming languages and text mark-up schemes. It is recommended both for low-light and normal-light
-conditions. Some high contrast colors like red or orange, and underlined or reversed text, are used in a few items in
-each syntax.
-
-Initially based on Moss (vimscript #2779), with some ideas coming from Distinguished (vimscript #3529), the
-current release departs a lot from its origins.
-
-A global dictionary allows alternatives to some default highlights, with a few coupled settings.
-All options are defined via numeric parameters designed to enable user functions or plugins to
-easily make option "rotation" by clicking on menus or toolbar buttons.
-
-Please notice that all the development and testing efforts took place under Linux. 
-
-Any feedback is welcome. (Our fellow vimmers will benefit if you remember to "rate this script"...)
-
-
-==========        Help      =================================================================================
-Technical details (and the release history) were previously here in the Vim Online page.
-They have now been moved into the companion help file.
-Do ":help briofita" to read the help.
-
-==========        Options      =================================================================================
-Most users will not need to use the options provided by the color scheme, since 
-there are appropriate defaults, they just need to do ":color briofita" on the Vim command-line for a start.
-But those users who want may try and change the highlight groups via numeric choices.
-Please check the help file for details.
-
-==========        Plugin      =================================================================================
-An example plugin is provided: briofita-support.vim.
-It has an example of a function that commands the cycling of the CursorLine
-highlight. And another example function can be called to create a menu that performs some useful operations.
- (Some menu entries assume you have installed the "tabpagecolorscheme" plugin, vimscript #3358).
-For more details please check the help file.
-
-==========================================================================================================
+Some of the supported programming languages and markup tools: 
+Java,Javascript,Perl,Python,Ruby,Shellscript,SQL,PL/SQL,Vimscript,C/C++, 
+Asciidoc,Markdown, CSS,HTML/XHTML,XML
