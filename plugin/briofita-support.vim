@@ -1,18 +1,13 @@
 "----------------------------------------------------------------------------
-" passando em todos os testes EMPACOTAR tudo, editar HELP e fazer release 10jul2013!
-"----------------------------------------------------------------------------
-" TODO  revisar os TODOs e FIXMEs e DEBUGs e ECHOs -- preparar release
-" TODO  definir claramente que funcoes etc devem ser g: (verso s:)
-"----------------------------------------------------------------------------
 "                               Plugin Heading:
 "   Name:        briofita-support
 "   Scriptname:  briofita-support.vim                                                     {{{1
 "   Author:      Sergio Nobre <sergio.o.nobre@gmail.com>
 "   Copyright:   Copyright (C) 2013 Sergio O. Nobre
-"   License:     The Vim licence (just change "Vim" to "Briofita").
+"   License:     The Vim license
 "   Website:     http://www.vim.org/scripts/script.php?script_id=4136
-"   Last Change: May 19th, 2013
-"   Version:     3.0.0
+"   Last Change: July 15th, 2013
+"   Version:     3.0.1
 "   Purpose:     This plugin allows the user to manage Briofita colorscheme options and
 "                serves as an example of driving Briofita's colorscheme behavior,
 "                focusing specially on options cycling.
@@ -28,7 +23,7 @@ if exists("s:briofita_support_version") || exists("g:briofita_support_version")
     finish
 endif
 
-let s:briofita_support_version = ["3.0.0"]
+let s:briofita_support_version = ["3.0.1"]
 let g:briofita_support_version = copy(s:briofita_support_version)
 
 let s:briofita_upper_menu    = 'Plugin.'
@@ -492,8 +487,6 @@ function! s:SetParameter(strKey, strValue, ...)    " {{{1
                         let allowtabvarcreation = a:1
                     endif
                     if allowtabvarcreation
-                        " FIXME DEBUG stmt below...
-                        echomsg "SetParameter() will now CREATE t:var in curr TAB"
                         let t:briofita_choice_for_cursorline = a:strValue
                     endif
                 endif
@@ -559,8 +552,6 @@ function! s:BriofitaGlobalCL(scope,...)    " {{{1
             if (a:scope==0)
                 " only the current briofita tabpage variable will be deleted
                 " TODO check if, at this point, we should move the t:var value into the g:dict corresponding key
-                " FIXME DEBUG stmt below...
-                echomsg "briofitaglobalcl() will now DELETE the t:var"
                 unlet! t:briofita_choice_for_cursorline
             else
                 " all the briofita tabpage variables will be deleted
@@ -571,8 +562,6 @@ function! s:BriofitaGlobalCL(scope,...)    " {{{1
                     call input(warnmsg)
                 endif
                 let currtbp=tabpagenr()
-                " FIXME DEBUG stmt below...
-                echomsg "briofitaglobalcl() will now DELETE t:var in ALL TABS"
                 tabdo if exists("t:briofita_choice_for_cursorline")
                    \ |unlet      t:briofita_choice_for_cursorline
                    \ |endif
@@ -621,7 +610,7 @@ function! s:IsLoadedBriofita()         "                                        
         endif
     endif
     if (!colorisloaded)
-        " FIXME not sure if 'colors_name' addresses the same entity as Vim 'g:colors_name'
+        " FIXME 'colors_name' vs.'g:colors_name'
         if exists("colors_name")
             let colorisloaded = (colors_name=='briofita')
         endif
@@ -740,7 +729,7 @@ function! g:BriofitaSetOneKey(dictkey,newvalue)                                 
 endfunction
 
 function! g:BriofitaCycleOneKey(dictkey)                                                  "    {{{1
-    " does cycling on the 'dictkey' key passed as parameter 1, performed only if values >= 0
+    " cycle the 'dictkey' key passed as parameter 1, performed only if values >= 0
     " returns 0 cannot cycle (some erro was detected, or the initial value was less than zero)
     " returns 1 OK, done
     " NOTE1: if messages are enabled, this function uses reg.@b for a redir operation
@@ -1031,7 +1020,7 @@ function! g:BriofitaSupportMenuMap(trigger)        "   {{{1
     if len(menu) > 0
         execute 'nmap ' . a:trigger . ' :popup ' . menu
     else
-        echomsg 'briofita-support: error-1: could not map the menu'
+        echomsg 'briofita-support: error: could not map the menu'
     endif
 endfunction
 
@@ -1045,6 +1034,7 @@ function! g:BriofitaMenu(...) " {{{1
             \ '-sep000-    <nop>'
         execute menucmd
     endif
+    " TODO use the version variable in the below About menu entry
     let lstmenuops = [
         \ '\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Main\ Menu    <nop>',
         \ '-sep001-	<nop>',
@@ -1055,7 +1045,7 @@ function! g:BriofitaMenu(...) " {{{1
         \ 'Help,\ About,\ Basics,\ Version.Help\ \ \(formatted\ as\ Vim\ helpfile\)   :tab help briofita<cr>',
         \ 'Help,\ About,\ Basics,\ Version.-sep005-   <nop>',
         \ 'Help,\ About,\ Basics,\ Version.-sep006-   <nop>',
-        \ 'Help,\ About,\ Basics,\ Version.About    :echomsg "Briofita v3.0.0 July 2013: briofita.vim colorscheme, briofita-support.vim plugin: author Sergio Nobre: license: the Vim license"<cr>',
+        \ 'Help,\ About,\ Basics,\ Version.About    :echomsg "Briofita v3.0.1 July 2013: briofita.vim colorscheme, briofita-support.vim plugin: author Sergio Nobre: license: the Vim license"<cr>',
         \ 'Help,\ About,\ Basics,\ Version.-sep007-   <nop>',
         \ 'Help,\ About,\ Basics,\ Version.-sep008-   <nop>',
         \ 'Help,\ About,\ Basics,\ Version.Basic\ Actions.\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Basic\ Actions     <nop>',

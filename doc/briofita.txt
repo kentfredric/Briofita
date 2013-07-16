@@ -15,7 +15,7 @@
 |              | and has details about how to set its parameters in order    |
 |              | to customize it.                                            |
 |              +-------------------------------------------------------------+
-|              | `Version`   v3.0.0  (view the release notes at the end)       |
+|              | `Version`   v3.0.1  (view the release notes at the end)       |
 |              | Author:   Sergio Nobre (sergio.o.nobre at gmail dot com)    |
 |              | Licence:  The VIM LICENCE applies to Briofita               |
 |              |           (read it in the Vim help:   ":help license").     |
@@ -785,28 +785,25 @@ USEFUL VIM HELP ENTRIES~
 
 Of interest to newbies, below are listed some basic Vim help commands the user
 may issue to get information about Vim options that are related to Briofita
-options, and commands used in connection with the colorscheme customization.
+options and commands used in connection with the colorscheme customization.
 
-Creating menus or toobar buttons: >
-              :help creating-menus
-<     or
->
-              :help gui-toolbar.
-<
-Creating maps or commands: >
-			  :help map-overview
-              :help 40.2
+Creating menus or toobar buttons:
+             :help creating-menus                            |creating-menus|
+             :help gui-toolbar                               |gui-toolbar|
 
-Basic concepts, commands and options: >
-              :help 'cursorline
-              :help 'cursorcolumn
-              :help 'conceallevel
-              :help 'colorcolumn
-              :help 'number
-	          :help 'hlsearch
-	          :help :nohlsearch
-              :help usr_27
-<
+Creating maps or commands:
+			 :help map-overview                              |map-overview|
+             :help 40.2                                      |40.2|
+
+Basic concepts, commands and options:
+             :help 'cursorline                               |'cursorline|
+             :help 'cursorcolumn                             |'cursorcolumn|
+             :help 'conceallevel                             |'conceallevel|
+             :help 'colorcolumn                              |'colorcolumn|
+             :help 'number                                   |'number|
+	         :help 'hlsearch                                 |'hlsearch|
+	         :help :nohlsearch                               |:nohlsearch|
+             :help usr_27                                    |usr_27|
 
 ==============================================================================
 10
@@ -847,6 +844,10 @@ Below are the release notes of Briofita.
 Note: As a general rule only the most recent releases of Briofita will be
       kept in the Vim web site.
 ------------------------------------------------------------------------------
+
+v3.0.1 (July, 2013)~
+	- Deleted a few debug commands/comments that had remained in the plugin.
+	- Increased the release number/date.
 
 v3.0.0 (July, 2013)~
 	- Extensive code refactoring and testing (colorscheme plus companion

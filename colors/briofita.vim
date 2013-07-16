@@ -5,7 +5,7 @@
 " Author:      Sergio Nobre <sergio.o.nobre@gmail.com>
 " License:     The Vim License (this command will show it: ':help copyright')
 " Website:     http://www.vim.org/scripts/script.php?script_id=4136
-" Last Change: v3.0.0: July 12th, 2013
+" Last Change: v3.0.1: July 15th, 2013
 " Note:        Check the companion help file for usage help and the release history.
 "              Newer versions may be downloaded from the above mentioned web address.
 " ====================================================================================
@@ -17,7 +17,7 @@ if (!has('gui_running')) || (!v:version >= 703)
     finish
 endif
 
-let    s:briofitaversion = ["3.0.0"]
+let    s:briofitaversion = ["3.0.1"]
 unlet! g:briofitaversion
 let    g:briofitaversion = copy(s:briofitaversion)
 
