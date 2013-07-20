@@ -6,8 +6,8 @@
 "   Copyright:   Copyright (C) 2013 Sergio O. Nobre
 "   License:     The Vim license
 "   Website:     http://www.vim.org/scripts/script.php?script_id=4136
-"   Last Change: July 15th, 2013
-"   Version:     3.0.1
+"   Last Change: July 19th, 2013
+"   Version:     3.0.2
 "   Purpose:     This plugin allows the user to manage Briofita colorscheme options and
 "                serves as an example of driving Briofita's colorscheme behavior,
 "                focusing specially on options cycling.
@@ -23,7 +23,7 @@ if exists("s:briofita_support_version") || exists("g:briofita_support_version")
     finish
 endif
 
-let s:briofita_support_version = ["3.0.1"]
+let s:briofita_support_version = ["3.0.2"]
 let g:briofita_support_version = copy(s:briofita_support_version)
 
 let s:briofita_upper_menu    = 'Plugin.'
@@ -667,17 +667,38 @@ function! g:BriofitaCycleCL() " A {{{1
         return
     endif
     let globalnewvalue = -1
-    let increasedvalue = g:briofita_parms.cursorline
-    let increasedvalue += 1
-    let globalnewvalue = increasedvalue
-    if g:briofita_parms.localcursorline
-        " local cul/cuc
-        let t:briofita_choice_for_cursorline += 1
-        " TODO: re-check: propagation of value from t:var into g:dict corresponding key
-        exe "let g:briofita_parms['cursorline'] = " . t:briofita_choice_for_cursorline
-    else
-        " global cul/cuc
-        let g:briofita_parms['cursorline'] = globalnewvalue
+    if has_key(g:briofita_parms,'cursorline')
+        let globalnewvalue = (g:briofita_parms.cursorline + 1)
+    endif
+    if has_key(g:briofita_parms,'localcursorline')
+        if g:briofita_parms.localcursorline      " local cul/cuc
+            if exists("t:briofita_choice_for_cursorline")
+                let    t:briofita_choice_for_cursorline += 1
+            else
+                if (globalnewvalue >= 0) " there is no t:variable, so use dict's 'cursorline', increased
+                    let t:briofita_choice_for_cursorline = globalnewvalue
+                else
+                    " TODO check: unlikely branch? wouldn't the colorscheme proper reset the value in this case?
+                    " TODO check: or should we simply do nothing in this case?
+                    " cannot cycle since current value is undetermined: go back to default...
+                    let t:briofita_choice_for_cursorline = 0
+                endif
+            endif
+            " TODO: re-check: propagation of value from t:var into g:dict corresponding key
+            exe "let g:briofita_parms['cursorline'] = " . t:briofita_choice_for_cursorline
+        else    " global cul/cuc
+            if (globalnewvalue >= 0)    " increase 'cursorline' dict key
+                let g:briofita_parms['cursorline'] = globalnewvalue
+            else
+                " TODO check if instead of going back to default, we should simply do nothing in this case...
+                " cannot cycle since current value is undetermined: go back to default...
+                let g:briofita_parms['cursorline'] = 0
+            endif
+        endif
+    else    " TODO: check: 'localcursorline' being an absent REQUIRED key, should any cycling be performed?
+        if (globalnewvalue >= 0)    " increase 'cursorline' dict key
+            let g:briofita_parms['cursorline'] = globalnewvalue
+        endif
     endif
     call  s:SourceBriofita()
     "call s:LoadBriofita(1)
@@ -1034,7 +1055,6 @@ function! g:BriofitaMenu(...) " {{{1
             \ '-sep000-    <nop>'
         execute menucmd
     endif
-    " TODO use the version variable in the below About menu entry
     let lstmenuops = [
         \ '\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Main\ Menu    <nop>',
         \ '-sep001-	<nop>',
@@ -1045,7 +1065,11 @@ function! g:BriofitaMenu(...) " {{{1
         \ 'Help,\ About,\ Basics,\ Version.Help\ \ \(formatted\ as\ Vim\ helpfile\)   :tab help briofita<cr>',
         \ 'Help,\ About,\ Basics,\ Version.-sep005-   <nop>',
         \ 'Help,\ About,\ Basics,\ Version.-sep006-   <nop>',
-        \ 'Help,\ About,\ Basics,\ Version.About    :echomsg "Briofita v3.0.1 July 2013: briofita.vim colorscheme, briofita-support.vim plugin: author Sergio Nobre: license: the Vim license"<cr>',
+        \ 'Help,\ About,\ Basics,\ Version.About  :echomsg "Briofita ' .
+        \                                         'v' .
+        \                                         escape(s:briofita_support_version[0], '.') . ' ' .
+        \                                         'briofita.vim colorscheme, briofita-support.vim plugin: ' .
+        \                                         'author Sergio Nobre: license: the Vim license"<cr>',
         \ 'Help,\ About,\ Basics,\ Version.-sep007-   <nop>',
         \ 'Help,\ About,\ Basics,\ Version.-sep008-   <nop>',
         \ 'Help,\ About,\ Basics,\ Version.Basic\ Actions.\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Basic\ Actions     <nop>',
