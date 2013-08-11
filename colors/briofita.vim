@@ -5,7 +5,7 @@
 " Author:      Sergio Nobre <sergio.o.nobre@gmail.com>
 " License:     The Vim License (this command will show it: ':help copyright')
 " Website:     http://www.vim.org/scripts/script.php?script_id=4136
-" Last Change: v3.0.2: July 19th, 2013
+" Last Change: v3.0.3: August 10th, 2013
 " Note:        Check the companion help file for usage help and the release history.
 "              Newer versions may be downloaded from the above mentioned web address.
 " ====================================================================================
@@ -17,7 +17,7 @@ if (!has('gui_running')) || (!v:version >= 703)
     finish
 endif
 
-let    s:briofitaversion = ["3.0.2"]
+let    s:briofitaversion = ["3.0.3"]
 unlet! g:briofitaversion
 let    g:briofitaversion = copy(s:briofitaversion)
 
@@ -44,7 +44,8 @@ if !exists("s:dict_conf_options")
         " Criteria: (1) if the 2nd list element is 1 it means a "boolean" option
         "           so that any non-zero key value means 'true', zero means 'false', and
         "           (highlight subscript zero will be used, if true).
-        "           (2) when the 2nd element is negative it means its setting is postponed
+        "           (2) when the 2nd element is (-1) it means its setting is postponed; in this case
+        "               the real limit is computed and moved here, based on the given highlights
         "           (3) if the 1st element >= 0, it is subject to automated cycling by some plugin
         "           (4) if the 1st element <= (-1) it is a special case, not subject to automated cycling
         "           (5) if the 1st element == (-2) it is used for distractionless editing mode
@@ -220,6 +221,9 @@ if !exists("s:dic_hi_options")
 						\		4:	[
 						\               [ "Folded",  "DarkOliveGreen3",  "DarkSlateGray",  "italic", ],
 						\			],
+						\		5:	[
+						\               [ "Folded",  "#4E7482",          "#062926",        "NONE", ],
+						\			],
            \              },
            \    'foldcolumn': {
 						\    (-2):	[
@@ -271,6 +275,9 @@ if !exists("s:dic_hi_options")
 						\			],
 						\		8:	[
 						\               [ "", "#C6B6FE",       "#062926",  "", ],
+						\			],
+						\		9:	[
+						\               [ "", "PowderBlue",    "Black",    "", ],
 						\			],
            \              },
        \    'search': {
@@ -503,11 +510,14 @@ if !exists("s:dic_hi_options")
         " Set The Limits: WARN: if limits are not set properly, items may not display as expected
         for key in keys(s:dic_hi_options)
             if has_key(s:dict_conf_options,key)
-                execute 'let   s:dict_conf_options.' . key . '[1] = ' .
-                    \   'len(keys(s:dic_hi_options.' . key . '))-1'
+                execute 'let hardcodedlimit = s:dict_conf_options.' . key . '[1]'
+                " except boolean options which only have one group of highlights per option-key
+                if (hardcodedlimit == (-1))
+                    execute 'let   s:dict_conf_options.' . key . '[1] = ' .
+                        \   'len(keys(s:dic_hi_options.' . key . '))-1'
+                endif
             endif
         endfor
-
 endif
 
 
@@ -531,8 +541,8 @@ function! s:GetUserOptions()
             endif
             for pkey in parmkeys
                 if has_key(s:dict_conf_options, pkey)
-                    execute 'let tval = g:briofita_parms.'    . pkey
-                    execute 'let limit    = s:dict_conf_options.' . pkey . '[1]'
+                    execute 'let tval  = g:briofita_parms.'    . pkey
+                    execute 'let limit = s:dict_conf_options.' . pkey . '[1]'
                     let correctit = 0
                     if type(tval) != type(0)
                         let correctit  = 1
@@ -654,24 +664,49 @@ function!   s:HighlightPerOptionsDic(item1)
                     let curdickey = 0
                 endif
                 execute 'let dicLstLst = s:dic_hi_options["' . a:item1 . '"]'
-                if ! has_key(dicLstLst,curdickey)
-                    if (curdickey == 0)
-                        " internal dict construction error: default should always exist!
-                        if (has_key(s:dict_conf_options,'warnlevel') && s:dict_conf_options.warnlevel == 1)
-                            echomsg "Briofita colorscheme: WARN: " .
-                                  \ "internal dict for entry(" . a:item1 .
-                                  \ ") missing default(0) key; got alternate highlight"
+                if dictmax != 1  " if non-boolean option
+                    if ! has_key(dicLstLst,curdickey)
+                        if (curdickey == 0)
+                            " internal dict construction error: default should always exist!
+                            if (has_key(s:dict_conf_options,'warnlevel') && s:dict_conf_options.warnlevel == 1)
+                                echomsg "Briofita colorscheme: WARN: " .
+                                      \ "internal dict for entry(" . a:item1 .
+                                      \ ") missing default(0) key; got alternate highlight"
+                            endif
+                            " alternate highlight used in case of errors
+                            execute 'highlight ' . a:item1 . ' guifg=#71D3B4 guibg=#062926'
+                            return
                         endif
-                        " alternate highlight used in case of errors
-                        execute 'highlight ' . a:item1 . ' guifg=#71D3B4 guibg=#062926'
+                        " NOTE: return(below) allows the item to NOT have a specific key,
+                        " NOTE: so that that it might be processed by another entry (like cc=1).
                         return
                     endif
-                    " NOTE: return(below) allows the item to NOT have a specific key,
-                    " NOTE: so that that it might be processed by another entry (like cc=1).
-                    return
+                else
+                    " boolean option
+                    if ! has_key(dicLstLst, 0)
+                        if (curdickey == 0)
+                            " internal dict construction error: default should always exist!
+                            if (has_key(s:dict_conf_options,'warnlevel') && s:dict_conf_options.warnlevel == 1)
+                                echomsg "Briofita colorscheme: WARN: " .
+                                      \ "internal dict for boolean option " . a:item1 .
+                                      \ ") missing default(0) key; got alternate highlight"
+                            endif
+                            " alternate highlight used in case of errors
+                            execute 'highlight ' . a:item1 . ' guifg=#71D3B4 guibg=#062926'
+                            return
+                        endif
+                        " NOTE: return(below) allows the item to NOT have a specific key,
+                        " NOTE: so that that it might be processed by another entry (like cc=1).
+                        return
+                    endif
                 endif
                 if (curdickey >= 0)  " if < 0, it is an exceptional case, not processed here
-                    let lstLst = dicLstLst[curdickey]
+
+                    if dictmax != 1  " if non-boolean option
+                        let lstLst = dicLstLst[curdickey]
+                    else " boolean option
+                        let lstLst = dicLstLst[0]
+                    endif
                     for [grpname, hifg, hibg, guiattr] in lstLst
                         if len(grpname) > 0
                             let groupname = grpname
@@ -866,7 +901,7 @@ if !exists("s:dict_hi_asciidoc")
             \   "asciidocListLabel"               : [ "#00B780", "", "bold"],
             \   "asciidocListNumber"              : [ "SpringGreen2", "",  ""],
             \   "asciidocLiteralBlock"            : [ "#2FBBA6", "",  "italic"],
-            \   "asciidocLiteralParagraph"        : [ "#00B780", "",  "italic"],
+            \   "asciidocLiteralParagraph"        : [ "#00B780", "",  "bold"],
             \   "asciidocMacro"                   : [ "#7FAAF2", "#1C3644", "italic"],
             \   "asciidocMacroAttributes"         : [ "BurlyWood2","Gray30","italic"],
             \   "asciidocNonAsciidocBar"          : [ "Maroon", "",  "bold"],
@@ -2276,7 +2311,7 @@ if !exists("s:dict_hi_other")
             \ }
 endif
 
-" Grouping The Non Optional Highlight Groups In A LIST:                                   {{{1
+" Grouping The Non Optional Highlight Groups In A LIST                                    {{{1
 if !exists("s:lst_dict_hi")
         let s:lst_dict_hi = [
                 \  s:dict_hi_asciidoc,
@@ -2345,7 +2380,7 @@ else " this (*BEGINs the ELSE branch (normal operations mode)
 
 " Set Common Highlights:                                                                  {{{1
 
-" Set Each Highlight: set highlights per options dictionary
+" Set each highlight per options dictionary
 for key in keys(s:dic_hi_options)
     if has_key(s:dict_conf_options,key)
         execute 'let maxix  = s:dict_conf_options.' . key . '[1]'

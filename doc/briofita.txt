@@ -15,7 +15,7 @@
 |              | and has details about how to set its parameters in order    |
 |              | to customize it.                                            |
 |              +-------------------------------------------------------------+
-|              | `Version`   v3.0.2  (view the release notes at the end)       |
+|              | `Version`   v3.0.3  (view the release notes at the end)       |
 |              | Author:   Sergio Nobre (sergio.o.nobre at gmail dot com)    |
 |              | Licence:  The VIM LICENCE applies to Briofita               |
 |              |           (read it in the Vim help:   ":help license").     |
@@ -528,6 +528,45 @@ Recommended Entry~
 Although not required, if you will use the "local cursorline" feature, it is
 recommended that you set the 'cursorline' parameter in the global dictionary.
 
+Priority of Cursorline Options~
+
+If 'localcursorline' is set (its value is 1), this is the established
+priority among the possible Briofita 'cursorline' option sources:
+
+>
+	first:  variable  t:briofita_choice_for_cursorline
+	second: dictionary key g:briofita_parms.cursorline
+	third:  default setting for cursorline (zero)
+<
+In the absence of the first, which is the one with the highest priority, the second is
+taken. In the absence of the second, the third is used.
+
+Between two existing options, the one having the highest priority is used.
+
+For example:
+>
+	If you have set both the tabpage variable and the dictionary key,
+	the tabpage variable will prevail.
+
+	If you omit both the tabpage variable and the dictionary key,
+	the default will be used.
+<
+
+A logical consequence of these priorities: 
+>
+    When you manually change the GLOBAL dictionary 'cursorline' key 
+    and do not perceive any change in display color, verify which setting
+    you have in the dictionary for 'localcursorline'. If it is on (if its
+    value is 1) the effects will only be visible upon changes of the LOCAL
+    tabpage variable. (Or else reset the 'localcursorline' key.)
+<
+
+NOTE: the colorscheme may create that tabpage variable if 'localcursorline'
+is set and the variable is not defined (its value will be taken either
+from the 'cursorline' dictionary key or from the default).
+
+
+
                                                                   |briofita-TOC|
 
 ==============================================================================
@@ -844,6 +883,14 @@ Below are the release notes of Briofita.
 Note: As a general rule only the most recent releases of Briofita will be
       kept in the Vim web site.
 ------------------------------------------------------------------------------
+
+v3.0.3 (August, 2013)~
+	- Added one more option to the Folded and Normal highlights.
+      The new Normal option has a black background (it provides
+      more contrast for use under intense lighting conditions).
+    - Improved one of the Asciidoc highlights.
+	- Bug fix: boolean options (like statusline) were not previously being
+	  cycled.
 
 v3.0.2 (July, 2013)~
 	- Improved one highlight in the colorscheme (for HTML).
