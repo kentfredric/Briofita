@@ -6,14 +6,15 @@ colorschemes it runs smoothly on current computers (at least I have been using i
 
 Briofita implements colorscheme highlights for many syntax elements and fulfills study, research and work needs. A 
 global dictionary allows optional values to some syntax elements whose highlights may easily be changed either 
-manually or via plugins. The companion plugin provides GUI menus that make it easy to change Briofita settings, but the 
-colorscheme may be used without it. A Vim help file explains its history, usage and technical details.
+manually or via plugins. 
 
-The current version of Briofita was tested only under GNU-Linux. The colorscheme does not use any special operating 
-system feature and should run properly under other environments, but the  plugin behavior under these systems is unknown.
-Any feedback is welcome.
+The companion plugin provides GUI menus that make it easy to change Briofita settings, but the colorscheme 
+may be used without it. A Vim help file explains its history, usage and technical details.
 
-Our fellow vimmers will benefit if you remember to "rate this script"...
+The current version of Briofita was tested only under GNU/Linux. The colorscheme does not use any special operating 
+system feature and should run properly under other environments, but the  plugin behavior under these systems is unknown. 
+
+Feedback is welcome. Our fellow vimmers will benefit if you remember to "rate this script"...
 
 
 ===========  Screenshots  (from a previous version)  ============================

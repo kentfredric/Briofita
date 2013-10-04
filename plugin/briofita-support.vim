@@ -6,34 +6,49 @@
 "   Copyright:   Copyright (C) 2013 Sergio O. Nobre
 "   License:     The Vim license
 "   Website:     http://www.vim.org/scripts/script.php?script_id=4136
-"   Last Change: August 10th, 2013
-"   Version:     3.0.3
+"   Last Change: October 4, 2013
+"   Version:     3.0.4
 "   Purpose:     This plugin allows the user to manage Briofita colorscheme options and
 "                serves as an example of driving Briofita's colorscheme behavior,
 "                focusing specially on options cycling.
-"   Note:        For explanations, usage help and the release history please
-"                check the companion help file. For know about new versions
-"                access the above web address.
+"   Notes:       For explanations, usage help and release history please
+"                check the companion help file. To know about new versions
+"                visit the above URL. The website has a button you can use
+"                for rating this script.
 " ----------------------------------------------------------------------------
 
-" Code Beginning:                                                                         {{{1
+" Startup                                                                         {{{1
 
 " check whether this script is already loaded
 if exists("s:briofita_support_version") || exists("g:briofita_support_version")
     finish
 endif
 
-let s:briofita_support_version = ["3.0.3"]
+let s:briofita_support_version = ["3.0.4"]
 let g:briofita_support_version = copy(s:briofita_support_version)
 
-let s:briofita_upper_menu    = 'Plugin.'
-let s:briofita_root_menu     = 'Plugin.Briofita\ Colorscheme\ Support.'
+function! s:SetMenuLocation()            " {{{1
+    " NOTE: for this version this function is to be called only once, from the plugin
+    "       startup code (so to avoid the risk of the menu not being uniquely located).
+    " CONSEQUENCE: if the user re-assigns the global variable g:briofita_root_menu
+    "              it will be effective only at the next time the plugin starts
+    " TODO: a future version might implement menu destruction/reconstruction,
+    "       allowing the user to dinamically change the menu location
+    let s:briofita_upper_menu = 'Plugin.'
+    let s:briofita_root_menu = s:briofita_upper_menu
+    let menubranchname = 'Briofita\ Colorscheme\ Support.'
+    " check if there is a user defined menu location
+    if exists("g:briofita_root_menu")
+        if strpart(g:briofita_root_menu,len(g:briofita_root_menu)-1) == '.'
+            let s:briofita_root_menu = g:briofita_root_menu
+        "else
+        "    echomsg "Briofita support: error: ill-specified g:briofita_root_menu ignored"
+        endif
+    endif
+    let s:briofita_root_menu .= menubranchname
+endfunction
 
-if exists("g:briofita_root_menu")
-    let s:briofita_root_menu = g:briofita_root_menu
-else
-    let g:briofita_root_menu = s:briofita_root_menu
-endif
+call s:SetMenuLocation()
 
 " The Options: 0 - does not show messages; 1,2 - show via gui dialog; 3 - show via CLI msg
 " NOTE1: error messages will always be shown
@@ -96,7 +111,7 @@ endfunction
 
 function! s:LoadBriofita(simplyload)                                                            " {{{1
     " source or resource the colorscheme based on one of two hardcoded commands
-    " pass 1 to use :color command, 0 to use the tabpagecolorscheme plugin
+    " pass 1 to use :color command, 0 to use tabpagecolorscheme
     if a:simplyload
         let l:cmd = 'color briofita '
     else
@@ -892,6 +907,16 @@ function! g:BriofitaCycleSearch()                                               
     endif
 endfunction
 
+function! g:BriofitaCycleSpecial()                                                         " {{{1
+    " cycling for the 'special' key in the parameter dictionary
+    call g:BriofitaCycleOneKey('special')
+    if (s:briofita_show_msgs == 2)
+        let l:msg = "Briofita: 'special'=" . g:briofita_parms.special
+        call s:DisplayMessage(l:msg)
+    endif
+endfunction
+
+
 function! g:BriofitaCycleDiff()                                                         " {{{1
     " cycling for the 'diff' key in the parameter dictionary
     call g:BriofitaCycleOneKey('diff')
@@ -1014,24 +1039,16 @@ function! s:MenuHeading()
 endfunction
 
 function! g:BriofitaSupportMenuString()                                               "   {{{1
+    " returns the menu entry string WITHOUT the ending dot (or a nullstring, if error)
     if exists('*g:BriofitaMenu')
-        if exists("g:briofita_root_menu")
-            " copies the menu spec (excluding the '.' at the end of the g: variable)
-            let briomenu = strpart(g:briofita_root_menu,0,len(g:briofita_root_menu)-1)
-        else
-            " presuming the default menu location for Briofita support plugin
-            try
-                let briomenu = 'Plugin.Briofita\ Colorscheme\ Support'
+        if exists("s:briofita_root_menu")
+            try        " menu spec (excluding the '.' at the end of the g: variable)
+                return strpart(s:briofita_root_menu,0,len(s:briofita_root_menu)-1)
             catch
-                " error
-                return ""
             endtry
         endif
-        return briomenu
-    else
-        " error
-        return ""
     endif
+    return ""
 endfunction
 
 function! g:BriofitaSupportMenuMap(trigger)        "   {{{1
@@ -1046,15 +1063,12 @@ function! g:BriofitaSupportMenuMap(trigger)        "   {{{1
 endfunction
 
 function! g:BriofitaMenu(...) " {{{1
-    " TODO improve the logic for menu insertion (conditionals below)
-    if exists("g:briofita_root_menu")
-        let s:briofita_root_menu = g:briofita_root_menu
-    else
-        let menucmd = 'amenu  <silent> ' .
-            \ s:briofita_upper_menu .
-            \ '-sep000-    <nop>'
-        execute menucmd
+    " TODO check ths if
+    if !exists("s:briofita_root_menu")
+        return
     endif
+    "let menucmd = 'amenu  <silent> ' . s:briofita_upper_menu . '-sep000-    <nop>'
+    "execute menucmd
     let lstmenuops = [
         \ '\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Main\ Menu    <nop>',
         \ '-sep001-	<nop>',
@@ -1172,8 +1186,9 @@ function! g:BriofitaMenu(...) " {{{1
         \ 'CYCLE\ "folded"\ Briofita\ option   :call g:BriofitaCycleFolded()<cr>',
         \ 'CYCLE\ "matchparen"\ Briofita\ option    :call g:BriofitaCycleMP()<cr>',
         \ 'CYCLE\ "mix01"\ Briofita\ option    :call g:BriofitaCycleMix01()<cr>',
-        \ 'CYCLE\ "normal"\ Briofita\ option     :call g:BriofitaCycleNormal()<cr>',
-        \ 'CYCLE\ "search"\ Briofita\ option     :call g:BriofitaCycleSearch()<cr>',
+        \ 'CYCLE\ "normal"\ Briofita\ option   :call g:BriofitaCycleNormal()<cr>',
+        \ 'CYCLE\ "search"\ Briofita\ option   :call g:BriofitaCycleSearch()<cr>',
+        \ 'CYCLE\ "special"\ Briofita\ option  :call g:BriofitaCycleSpecial()<cr>',
         \ 'TOGGLE\ "statusline"\ Briofita\ option     :call g:BriofitaToggleStatusline()<cr>',
         \ '-sep053-       <nop>',
         \ '-sep054-       <nop>']
@@ -1185,15 +1200,13 @@ function! g:BriofitaMenu(...) " {{{1
             \ menuentry
         execute menucmd
     endfor
-    if ! exists("g:briofita_root_menu")
-        if a:0
-            " additional separator at the end
-            let menucmd = 'amenu  <silent> ' .
-                \ s:briofita_upper_menu .
-                \ '-sep055-    <nop>'
-            execute menucmd
-        endif
-    endif
+    "if a:0
+    "    " additional separator at the end
+    "    let menucmd = 'amenu  <silent> ' .
+    "        \ s:briofita_upper_menu .
+    "        \ '-sep055-    <nop>'
+    "    execute menucmd
+    "endif
 endfunction
 
 "

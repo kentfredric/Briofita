@@ -1,4 +1,4 @@
-*briofita.txt*	Companion help to Briofita, a customizable dark colorscheme
+*briofita.txt* Companion help to Briofita, a customizable dark GUI colorscheme
 
 +--------------+-------------------------------------------------------------+
 |   *briofita*   | `Briofita`: a complex, (somewhat-)dark background  Vim  GUI   |
@@ -15,7 +15,7 @@
 |              | and has details about how to set its parameters in order    |
 |              | to customize it.                                            |
 |              +-------------------------------------------------------------+
-|              | `Version`   v3.0.3  (view the release notes at the end)       |
+|              | `Version`   v3.0.4  (view the release notes at the end)       |
 |              | Author:   Sergio Nobre (sergio.o.nobre at gmail dot com)    |
 |              | Licence:  The VIM LICENCE applies to Briofita               |
 |              |           (read it in the Vim help:   ":help license").     |
@@ -23,7 +23,7 @@
 
 
 ==============================================================================
-TABLE OF CONTENTS                      {{{1                       *briofita-TOC*
+TABLE OF CONTENTS                                         *briofita-TOC*    {{{1
 ==============================================================================
 
  1. About Briofita .............................. |briofita-about|
@@ -46,7 +46,7 @@ TABLE OF CONTENTS                      {{{1                       *briofita-TOC*
 
 ==============================================================================
 1
-ABOUT BRIOFITA                         {{{1                     *briofita-about*
+ABOUT BRIOFITA                                            *briofita-about*  {{{1
 
 
 `Briofita` is basically composed of
@@ -93,7 +93,7 @@ restructured to use a color dictionary similar to the one used by the
 
 ==============================================================================
 2
-INSTALLATION                           {{{1              *briofita-installation*
+INSTALLATION                                       *briofita-installation*  {{{1
 
 
 Briofita is released as a packed file (zip).
@@ -165,7 +165,7 @@ tested only with this plugin.
 
 ==============================================================================
 3
-COLORSCHEME CUSTOMIZATION              {{{1             *briofita-customization*
+COLORSCHEME CUSTOMIZATION                         *briofita-customization*  {{{1
 
 
 Briofita comes with default settings for common user's needs.
@@ -268,7 +268,7 @@ value, the default.
 
 ==============================================================================
 4
-OPTIONS LIST                           {{{1              *briofita-options-list*
+OPTIONS LIST                                       *briofita-options-list*  {{{1
 
 
 All the below Briofita options ("parameters") can be set by the user via
@@ -351,7 +351,7 @@ CursorLineNr~
 
 key:             'cursorlinenr'
 max:             3
-Highlight items: CursorLineNr, LineNr, VimNumber
+Highlight items: CursorLineNr, VimNumber, VimTodo
 Dictionary key:  g:briofita_parms['cursorlinenr']
 
 Command-line example:
@@ -399,8 +399,8 @@ any corresponding Vim option.)
 Normal~
 
 key:             'normal'
-max:             8
-Highlight items: Normal
+max:             9
+Highlight items: Normal, LineNr
 Dictionary:      g:briofita_parms['normal']
 
 Command-line setting:
@@ -409,6 +409,11 @@ Command-line setting:
 <
 The Normal highlight is applied to the common text, the text that has no
 special syntax.
+
+The last cycle item for the "normal" key has the Normal highlight with
+black background, somewhat breaking the colorscheme style. It is an
+style exception added to aid in using the colorscheme when the
+room has more ilumination than usual.
 
 ------------------------------------------------------------------------------
 Search~
@@ -430,13 +435,17 @@ option hlsearch to see the effect of this Briofita option.)
 Diff~
 
 key:             'diff'
-max:             7
+max:             10
 Highlight items: diffAdd,diffAdded,diffChange,diffChanged,diffDelete,
                  diffRemoved,diffSubname,DiffText
 Dictionary:      g:briofita_parms['diff']
 
 Useful when comparing files in Vim or opening diff files. Cycle, experimenting
 with the different alternatives, then define one as your favorite.
+
+It was difficult to fine tune the options for the "diff" key, so we let it
+have so many options. Perhaps in a future version of the software we will
+get a better result and enable a reduction of the number of options.
 
 ------------------------------------------------------------------------------
 FoldColumn~
@@ -460,7 +469,8 @@ Mix01~
 key:             'mix01'
 max:             4
 Highlight items: VimString,VimMapRHS,VimIsCommand,
-                 VimEchoHLNone,VimFilter,VimFuncBody,JavaString
+                 VimEchoHLNone,VimFilter,VimFuncBody,JavaString,
+				 JavaConditional, JavaRepeat
 Dictionary:      g:briofita_parms['mix01']
 
 ------------------------------------------------------------------------------
@@ -468,14 +478,17 @@ Special~
 
 key:             'special'
 max:             3
-Highlight items: Special
+Highlight items: Special, HelpHeader, HelpHeadline, HelpHypertextEntry,
+				 HelpHypertextJump, HelpSectionDelim, ManLongOptionDesc,
+				 ManOptionDesc, PythonDot, PythonImport, PythonStatement
+
 Dictionary:      g:briofita_parms['special']
 
                                                                   |briofita-TOC|
 
 ==============================================================================
 5
-TABPAGE_LOCAL_SETTINGS                 {{{1            *briofita-local-settings*
+TABPAGE LOCAL SETTINGS                           *briofita-local-settings*  {{{1
 
 Local Settings~
 
@@ -538,8 +551,8 @@ priority among the possible Briofita 'cursorline' option sources:
 	second: dictionary key g:briofita_parms.cursorline
 	third:  default setting for cursorline (zero)
 <
-In the absence of the first, which is the one with the highest priority, the second is
-taken. In the absence of the second, the third is used.
+In the absence of the first, which is the one with the highest priority, the
+second is taken. In the absence of the second, the third is used.
 
 Between two existing options, the one having the highest priority is used.
 
@@ -552,9 +565,9 @@ For example:
 	the default will be used.
 <
 
-A logical consequence of these priorities: 
+A logical consequence of these priorities:
 >
-    When you manually change the GLOBAL dictionary 'cursorline' key 
+    When you manually change the GLOBAL dictionary 'cursorline' key
     and do not perceive any change in display color, verify which setting
     you have in the dictionary for 'localcursorline'. If it is on (if its
     value is 1) the effects will only be visible upon changes of the LOCAL
@@ -571,7 +584,7 @@ from the 'cursorline' dictionary key or from the default).
 
 ==============================================================================
 6
-BRIOFITA_SUPPORT_PLUGIN                           {{{1         *briofita-plugin*
+BRIOFITA SUPPORT PLUGIN                                  *briofita-plugin*  {{{1
 
 The companion plugin, "briofita-support.vim", shows Briofita usage examples
 and implements procedures that make it a handy tool for day-to-day use.
@@ -582,7 +595,7 @@ plugin will not provide most of its functionality without the colorscheme.
 
 ------------------------------------------------------------------------------
 6.1
-BRIOFITA_SUPPORT_MENUS                           {{{1           *briofita-menus*
+BRIOFITA SUPPORT MENUS                                    *briofita-menus*  {{{1
 
 Do
 >
@@ -597,17 +610,44 @@ to the Help (displaying this help file), the About page, the Basic Actions
 sub-menu which has a helpful newbies sub-menu crafted to help new Vim users to
 set Briofita-related Vim options, and the Version information sub-menu.
 
-This variable affects the positioning of the menu that is built by the plugin: >
+The following variable affects the positioning of the menu that is built
+by the plugin: >
           g:briofita_root_menu.
 <
-If the above variable does not exist, the plugin inserts the menu into an
-assumed main "Plugin" menu.
+You may set this global variable in your ".vimrc" file. If given, this
+variable should have a dot at its end, otherwise it will be ignored.
+
+If you want the support menu inserted under your "MyPlugins" main menu,
+for example, specify it this way: >
+		let g:briofita_root_menu = 'MyPlugins.'
+<
+(Notice the ending dot "." in the string above.)
+The corresponding menu path will be >
+		MyPlugins --> Briofita Colorscheme Support.
+<
+This will allow you to access all branches of the Briofita support menu tree.
+
+This variable relates only to the menu location, not the menu name. The
+inserted menu branch name will always be "Briofita Colorscheme Support".
+
+If the root menu specified in the global variable does not exist, it will
+be created.
+
+If the global variable does not exist, the plugin inserts its menu under an
+assumed main "Plugin" menu. The resulting menu branch will be as follows: >
+		Plugin --> Briofita Colorscheme Support
+<
+
+The precise position of the support menu under the root menu (top, middle,
+bottom...) is not pre-defined. It will depend on the entries you might already
+have under the root menu at the moment in which the menu is inserted.
+
 
                                                                   |briofita-TOC|
 
 ------------------------------------------------------------------------------
 6.2
-BRIOFITA_SUPPORT_FUNCTIONS                       {{{1       *briofita-functions*
+BRIOFITA SUPPORT FUNCTIONS                            *briofita-functions*  {{{1
 
 
 A list of the plugin global functions follows.
@@ -713,7 +753,7 @@ The below command is an example of how to display it above the command line:
 
 ------------------------------------------------------------------------------
 6.3
-BRIOFITA_COMMANDS_AND_MAPS                      {{{1        *briofita-cmds-maps*
+BRIOFITA COMMANDS AND MAPS                            *briofita-cmds-maps*  {{{1
 
 This release of the Briofita plugin does not provide commands and maps.
 You can easily create them, calling the available global functions.
@@ -733,7 +773,7 @@ for Vim help entries that tell you how to create maps and commands.
 
 ==============================================================================
 7
-PERFORMANCE                            {{{1               *briofita-performance*
+PERFORMANCE                                         *briofita-performance*  {{{1
 
 General Performance~
 
@@ -775,7 +815,7 @@ keys as a sequence of numbers.
 
 ==============================================================================
 8
-SYNTAX COVERAGE                      {{{1                   *briofita-coverage*
+SYNTAX COVERAGE                                        *briofita-coverage*  {{{1
 
 Languages and applications covered by the colorscheme:
 
@@ -819,8 +859,8 @@ Customized highlights for Vim plugins~
                                                                   |briofita-TOC|
 
 ------------------------------------------------------------------------------
-9                                        {{{1                 *briofita-vimhelp*
-USEFUL VIM HELP ENTRIES~
+9
+USEFUL VIM HELP ENTRIES                                 *briofita-vimhelp*  {{{1
 
 Of interest to newbies, below are listed some basic Vim help commands the user
 may issue to get information about Vim options that are related to Briofita
@@ -846,7 +886,7 @@ Basic concepts, commands and options:
 
 ==============================================================================
 10
-ISSUES                                 {{{1              *briofita-known-issues*
+ISSUES                                             *briofita-known-issues*  {{{1
 
 Vim Help File Editing~
 
@@ -874,15 +914,22 @@ your help files; these files are usually viewed in a non-modifiable state.
 
 ==============================================================================
 11
-HISTORY                                {{{1                   *briofita-history*
+HISTORY                                                 *briofita-history*  {{{1
 
 
 Below are the release notes of Briofita.
 
 ------------------------------------------------------------------------------
-Note: As a general rule only the most recent releases of Briofita will be
-      kept in the Vim web site.
-------------------------------------------------------------------------------
+
+v3.0.4 (October, 2013)~
+	- Plugin: Improved menu location logic and handling of menu location
+	  variables. New menu entry added for cycling the "special" key.
+    - Colorscheme: Added highlights to the "special" key (Vim help, manpages,
+	  Python). Relocated LineNr cycling to another key. Improved logic for
+	  cleared normal highlight. Added special FoldColumn highlight for Normal
+	  black background. Improved several highlights, including some related
+	  to Vim Diff, Vim Help, Asciidoc, CSS, HTML, Java, Sed, manpage,
+	  Markdown, Perl, PL/SQL and Python.
 
 v3.0.3 (August, 2013)~
 	- Added one more option to the Folded and Normal highlights.
@@ -920,7 +967,8 @@ v2.0.2 (May, 2013)~
     - Changed the default for Search highlight. Cleaned plugin and help files.
 
 v2.0.1 (May, 2013)~
-    - Code cleaning. Bug fix: corrected some leftovers from previous development.
+    - Code cleaning. Bug fix: corrected some leftovers from previous
+	  development.
 
 v2.0.0 (May, 2013)~
     - Increased major number due to the change in global parameter names. They
@@ -983,7 +1031,7 @@ v1.0~
 
 ==============================================================================
 12
-TODO                                   {{{1                      *briofita-todo*
+TODO                                                       *briofita-todo*  {{{1
 
 	- Enable an easy "adaptation" of the colorscheme to lighting conditions,
 	  via some parameter or option. This need was perceived recently, when I
@@ -995,7 +1043,7 @@ TODO                                   {{{1                      *briofita-todo*
 
 ==============================================================================
 13
-DISTRACTIONLESS_MODE                        {{{1      *briofita-distractionless*
+DISTRACTIONLESS MODE                            *briofita-distractionless*  {{{1
 
 Briofita has a distraction-less editing feature. >
 	This topic is located at the end of the helpfile because it is an
