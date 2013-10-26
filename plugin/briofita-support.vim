@@ -6,8 +6,8 @@
 "   Copyright:   Copyright (C) 2013 Sergio O. Nobre
 "   License:     The Vim license
 "   Website:     http://www.vim.org/scripts/script.php?script_id=4136
-"   Last Change: October 4, 2013
-"   Version:     3.0.4
+"   Last Change: October 25, 2013
+"   Version:     3.0.5
 "   Purpose:     This plugin allows the user to manage Briofita colorscheme options and
 "                serves as an example of driving Briofita's colorscheme behavior,
 "                focusing specially on options cycling.
@@ -24,7 +24,7 @@ if exists("s:briofita_support_version") || exists("g:briofita_support_version")
     finish
 endif
 
-let s:briofita_support_version = ["3.0.4"]
+let s:briofita_support_version = ["3.0.5"]
 let g:briofita_support_version = copy(s:briofita_support_version)
 
 function! s:SetMenuLocation()            " {{{1
@@ -322,7 +322,7 @@ endfunction
 
 function! s:DisplayMessage(themsg)                                                    "   {{{1
     if (s:briofita_show_msgs == 1) || (s:briofita_show_msgs == 2)
-        call s:DialogMessage(a:themsg)                                                    "   {{{1
+        call s:DialogMessage(a:themsg)
         try
             call tlib#input#Dialog(a:themsg,[],'')
         catch
@@ -330,6 +330,26 @@ function! s:DisplayMessage(themsg)                                              
         endtry
     elseif (s:briofita_show_msgs == 3)
         echomsg a:themsg
+    endif
+endfunction
+
+function! g:ShowBriofitaInfo()                                                  "   {{{1
+    " show via echomsg the key-sorted contents of g:briofita_keys dict
+    if exists("g:briofita_keys")
+        let allkeys = sort(keys(g:briofita_keys))
+        "echomsg "g:briofita_keys: {"
+        echomsg "BRIOFITA DICTIONARY KEYS"
+        echomsg "Note: numbers do not refer to cycling, instead they count highlights."
+        echomsg "   "
+        echomsg "g:briofita_keys: "
+        for key in allkeys
+            let quotedkey = string(key)
+            let qlen      = len(quotedkey)
+            let noquote   = strpart(quotedkey,1,qlen-2)
+            let shownkey = "'" . key . "'"
+            let cmd = "echomsg '    ' . shownkey . ': ' . string(g:briofita_keys." . noquote . ")"
+            execute cmd
+        endfor
     endif
 endfunction
 
@@ -459,7 +479,11 @@ function! s:SetParameter(strKey, strValue, ...)    " {{{1
         call s:SetParameterCulCuc(a:strValue)
         return
     endif
-    let allowedkeys = g:briofita_allowed_parms
+    if ! exists("g:briofita_keys")
+        echomsg "briofita-support: SetParameter(): error: interface variable g:briofita_keys not found"
+        return
+    endif
+    let allowedkeys = sort(keys(g:briofita_keys))
     let ixk = index(allowedkeys, a:strKey)
     if ixk >= 0
         if !exists("g:briofita_parms")
@@ -511,7 +535,12 @@ function! s:SetParameter(strKey, strValue, ...)    " {{{1
 endfunction
 
 function! s:SetParameterCulCuc(strValue)    " {{{1
-    let allowedkeys = g:briofita_allowed_parms
+    if ! exists("g:briofita_keys")
+        echomsg "briofita-support: SetParameterCulCuc(): error: interface variable g:briofita_keys not found"
+        return
+    endif
+    let allowedkeys = sort(keys(g:briofita_keys))
+
     if index(allowedkeys, 'cursorline') < 0
         return
     endif
@@ -1063,7 +1092,7 @@ function! g:BriofitaSupportMenuMap(trigger)        "   {{{1
 endfunction
 
 function! g:BriofitaMenu(...) " {{{1
-    " TODO check ths if
+    " TODO check this if
     if !exists("s:briofita_root_menu")
         return
     endif
@@ -1154,6 +1183,7 @@ function! g:BriofitaMenu(...) " {{{1
         \ 'Help,\ About,\ Basics,\ Version.Version.View\ Briofita\ version\ and\ parameters\ \(current\ tabpage\ only\)\ --\ via\ tlib\ dialog\ if\ available :call <SID>DialogMessage(g:BriofitaVersion(1))<cr>',
         \ 'Help,\ About,\ Basics,\ Version.Version.View\ Briofita\ version\ and\ parameters\ \(current\ tabpage\ only\)\ --\ via\ echo\*\ command             :echo g:BriofitaVersion(0)<cr>',
         \ 'Help,\ About,\ Basics,\ Version.Version.-sep044-    <nop>',
+        \ 'Help,\ About,\ Basics,\ Version.Version.View\ Briofita\ informational\ variable\ g:briofita_keys\ --\ via\ echomsg\ command   :call g:ShowBriofitaInfo()<cr>',
         \ 'Help,\ About,\ Basics,\ Version.Version.-sep045-    <nop>',
         \ 'Help,\ About,\ Basics,\ Version.Version.-sep046-    <nop>',
         \ 'Help,\ About,\ Basics,\ Version.Version.NOTE\:\ below\ menu\ actions\ may\ take\ more\ time\,\ it\ depends\ on\ how\ many\ open\ tabs\ you\ have   <nop>',
