@@ -5,7 +5,7 @@
 " Author:      Sergio Nobre <sergio.o.nobre@gmail.com>
 " License:     The Vim License (this command will show it: ':help copyright')
 " Website:     http://www.vim.org/scripts/script.php?script_id=4136
-" Last Change: v3.0.5: October 25, 2013
+" Last Change: v3.0.6: October 27, 2013
 " Note:        Check the companion help file for usage help and the release history.
 "              Newer versions may be downloaded from the above mentioned web address.
 " ====================================================================================
@@ -17,7 +17,7 @@ if (!has('gui_running')) || (!v:version >= 703)
     finish
 endif
 
-let    s:briofitaversion = ["3.0.5"]
+let    s:briofitaversion = ["3.0.6"]
 unlet! g:briofitaversion
 let    g:briofitaversion = copy(s:briofitaversion)
 
@@ -668,41 +668,46 @@ if !exists("s:dic_hi_options")
 						\               [ "ColorColumn",        "NONE",             "NONE",        "NONE",   ],
                         \               [ "asciidocBlockTitle", "#CC4455",          "bg",          "italic", ],
                         \               [ "asciidocQuotedSuperscript", "PaleGreen3","bg",          "NONE",   ],
-                        \               [ "htmlCommentPart",    "#6A6A6A",          "bg",          "italic", ],
-						\               [ "NonText",            "bg",               "bg",          "NONE",   ],
-                        \               [ "xmlCommentPart",     "#6A6A6A",          "bg",          "italic", ],
+                        \               [ "asciidocTwoLineTitle",      "Green2",    "#3A5022",     "NONE",   ],
+                        \               [ "htmlCommentPart",           "#6A6A6A",   "bg",          "italic", ],
+						\               [ "NonText",                   "bg",        "bg",          "NONE",   ],
+                        \               [ "xmlCommentPart",            "#6A6A6A",   "bg",          "italic", ],
 						\			],
 						\		0:	[
-						\               [ "ColorColumn",        "PaleGreen2",          "#294C44", "NONE",   ],
-                        \               [ "asciidocBlockTitle", "#009F6F",             "bg",      "NONE",   ],
+						\               [ "ColorColumn",               "PaleGreen2",   "#294C44", "NONE",   ],
+                        \               [ "asciidocBlockTitle",        "#009F6F",      "bg",      "NONE",   ],
                         \               [ "asciidocQuotedSuperscript", "LightSeaGreen","bg",      "NONE",   ],
-                        \               [ "htmlCommentPart",    "#5D8B9C",             "bg",      "italic", ],
-						\               [ "NonText",            "#0F450F",             "NONE",    "NONE",   ],
-                        \               [ "xmlCommentPart",     "#5D8B9C",             "bg",      "italic", ],
+                        \               [ "asciidocTwoLineTitle",      "SlateBlue1",   "Black",   "NONE",   ],
+                        \               [ "htmlCommentPart",           "#5D8B9C",      "bg",      "italic", ],
+						\               [ "NonText",                   "#0F450F",      "NONE",    "NONE",   ],
+                        \               [ "xmlCommentPart",            "#5D8B9C",      "bg",      "italic", ],
 						\			],
 						\		2:	[
-						\               [ "ColorColumn",        "Linen",            "DarkRed",    "NONE",   ],
-                        \               [ "asciidocBlockTitle", "#CC4455",          "bg",         "NONE",   ],
-                        \               [ "asciidocQuotedSuperscript", "PaleGreen3","bg",         "NONE",   ],
-                        \               [ "htmlCommentPart",    "#6A6A6A",          "bg",         "italic", ],
-						\               [ "NonText",            "SlateBlue",        "bg",         "NONE",   ],
-                        \               [ "xmlCommentPart",     "#6A6A6A",          "bg",         "italic", ],
+						\               [ "ColorColumn",               "Linen",        "DarkRed", "NONE",   ],
+                        \               [ "asciidocBlockTitle",        "#CC4455",      "bg",      "NONE",   ],
+                        \               [ "asciidocQuotedSuperscript", "PaleGreen3",   "bg",      "NONE",   ],
+                        \               [ "asciidocTwoLineTitle",      "Green2",       "bg",      "NONE",   ],
+                        \               [ "htmlCommentPart",           "#6A6A6A",      "bg",      "italic", ],
+						\               [ "NonText",                   "SlateBlue",    "bg",      "NONE",   ],
+                        \               [ "xmlCommentPart",            "#6A6A6A",      "bg",      "italic", ],
 						\			],
 						\		3:	[
-						\               [ "ColorColumn",        "DodgerBlue1",      "#28364D",    "NONE",   ],
-                        \               [ "asciidocBlockTitle", "#009F6F",          "bg",         "italic", ],
-                        \               [ "asciidocQuotedSuperscript", "PaleGreen2","bg",         "NONE",   ],
-                        \               [ "htmlCommentPart",    "#557F8F",          "bg",         "italic", ],
-						\               [ "NonText",            "Maroon",           "bg",         "NONE",   ],
-                        \               [ "xmlCommentPart",     "#557F8F",          "bg",         "italic", ],
+						\               [ "ColorColumn",               "DodgerBlue1",  "#28364D", "NONE",   ],
+                        \               [ "asciidocBlockTitle",        "#009F6F",      "bg",      "italic", ],
+                        \               [ "asciidocQuotedSuperscript", "PaleGreen2",   "bg",      "NONE",   ],
+                        \               [ "asciidocTwoLineTitle",      "Green3",       "Black",   "NONE",   ],
+                        \               [ "htmlCommentPart",           "#557F8F",      "bg",      "italic", ],
+						\               [ "NonText",                   "Maroon",       "bg",      "NONE",   ],
+                        \               [ "xmlCommentPart",            "#557F8F",      "bg",      "italic", ],
 						\			],
 						\		4:	[
-						\               [ "ColorColumn",        "NONE",            "GoldenRod4",  "NONE", ],
-                        \               [ "asciidocBlockTitle", "#8FBFDC",         "bg",          "NONE", ],
-                        \               [ "asciidocQuotedSuperscript", "#99AD6A",  "bg",          "NONE",   ],
-                        \               [ "htmlCommentPart",    "#77996C",         "bg",          "italic", ],
-						\               [ "NonText",            "#408C3F",         "bg",          "NONE", ],
-                        \               [ "xmlCommentPart",     "#77996C",         "bg",          "italic", ],
+						\               [ "ColorColumn",               "NONE",         "GoldenRod4","NONE", ],
+                        \               [ "asciidocBlockTitle",        "#8FBFDC",      "bg",        "NONE", ],
+                        \               [ "asciidocQuotedSuperscript", "#99AD6A",      "bg",        "NONE",   ],
+                        \               [ "asciidocTwoLineTitle",      "FireBrick1",   "bg",        "NONE",   ],
+                        \               [ "htmlCommentPart",           "#77996C",      "bg",        "italic", ],
+						\               [ "NonText",                   "#408C3F",      "bg",        "NONE", ],
+                        \               [ "xmlCommentPart",            "#77996C",      "bg",        "italic", ],
 						\			],
            \              },
            \ }
@@ -1109,6 +1114,7 @@ if !exists("s:dict_hi_asciidoc")
             \   "asciidocLink"	                  : [ "#8870FF", "",  "bold,underline"],
             \   "asciidocList"                    : [ "#00B780", "",  ""],
             \   "asciidocListBlockDelimiter"      : [ "#779DB2", "",  ""],
+            \   "asciidocOpenBlockDelimiter"      : [ "#779DB2", "",  ""],
             \   "asciidocListBullet"              : [ "SpringGreen2", "",  ""],
             \   "asciidocListContinuation"        : [ "Gray50", "",  "italic"],
             \   "asciidocListingBlock"            : [ "DeepSkyBlue2", "",  ""],
@@ -1117,7 +1123,7 @@ if !exists("s:dict_hi_asciidoc")
             \   "asciidocLiteralBlock"            : [ "#2FBBA6", "",  "italic"],
             \   "asciidocLiteralParagraph"        : [ "#00B780", "",  ""],
             \   "asciidocMacro"                   : [ "#7FAAF2", "#152933", "italic"],
-            \   "asciidocMacroAttributes"         : [ "BurlyWood2","Gray30","italic"],
+            \   "asciidocMacroAttributes"         : [ "#6885BD","","italic,underline"],
             \   "asciidocNonAsciidocBar"          : [ "Maroon", "",  "bold"],
             \   "asciidocOddnumberedTableCol"     : [ "#9FE846", "#473273", ""],
             \   "asciidocOneLineTitle"            : [ "FireBrick1", "#112A33", "bold,underline"],
@@ -1139,7 +1145,7 @@ if !exists("s:dict_hi_asciidoc")
             \   "asciidocQuotedUnconstrainedEmphasized" : [ "DeepSkyBlue2", "",  ""],
             \   "asciidocQuotedUnconstrainedMonospaced" : [ "#00B780", "",  "italic"],
             \   "asciidocReference"	              : [ "#A191F5", "",  ""],
-            \   "asciidocRefMacro"                : [ "#7FA2E6", "",  "italic"],
+            \   "asciidocRefMacro"                : [ "LightSlateGray", "",  "italic"],
             \   "asciidocReplacements"	          : [ "DeepSkyBlue2", "",  ""],
             \   "asciidocRevisionInfo"	          : [ "DodgerBlue2", "",  ""],
             \   "asciidocRuler"                   : [ "DeepSkyBlue2", "",  ""],
@@ -1163,7 +1169,6 @@ if !exists("s:dict_hi_asciidoc")
             \   "asciidocToDo"                    : [ "LemonChiffon3", "#345FA8",  ""],
             \   "asciidocTriplePlusPassthrough"   : [ "#88CB35", "",  ""],
             \   "asciidocTripplePlusPassthrough"  : [ "#A191F5", "",  ""],
-            \   "asciidocTwoLineTitle"            : [ "Green2", "#3A5022",  ""],
             \   "asciidocURL"                     : [ "Turquoise", "", "italic"],
             \ }
 endif
@@ -1942,6 +1947,7 @@ if !exists("s:dict_hi_python")
             \   "pythonStrTemplate"            : [ "PowderBlue", "#264040", "italic"],
             \   "pythonSuperclass"             : [ "#99AD6A", "", "italic"],
             \   "pythonSync"                   : [ "#AE5555", "",  "italic"],
+            \   "PythonTodo"                   : [ "MediumSeaGreen", "", ""],
             \   "pythonUniEscape"              : [ "#CC4455", "",  ""],
             \   "pythonUniEscapeError"         : [ "Khaki2", "VioletRed4",  ""],
             \   "pythonUniRawEscape"           : [ "#CC4455", "",  ""],
@@ -2542,6 +2548,7 @@ endif
 " Grouping The Non Optional Highlight Groups In A LIST                                    {{{1
 if !exists("s:lst_dict_hi")
         let s:lst_dict_hi = [
+                \  s:dict_hi_asciidoc,
                 \  s:dict_hi_awk,
                 \  s:dict_hi_build_tools,
                 \  s:dict_hi_c_cpp,
@@ -2588,7 +2595,6 @@ highlight SpellLocal           guifg=fg         guibg=bg      gui=undercurl     
 highlight SpellRare            guifg=fg         guibg=bg      gui=undercurl      guisp=#C59F6F
 highlight netrwList            guifg=AquaMarine guibg=#880C0E gui=bold,undercurl guisp=SkyBlue2
 
-highlight! link PythonTodo VimTodo
 
 
 " Begin Main Flow:                                                                              {{{1

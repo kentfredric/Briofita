@@ -6,8 +6,8 @@
 "   Copyright:   Copyright (C) 2013 Sergio O. Nobre
 "   License:     The Vim license
 "   Website:     http://www.vim.org/scripts/script.php?script_id=4136
-"   Last Change: October 25, 2013
-"   Version:     3.0.5
+"   Last Change: October 27, 2013
+"   Version:     3.0.6
 "   Purpose:     This plugin allows the user to manage Briofita colorscheme options and
 "                serves as an example of driving Briofita's colorscheme behavior,
 "                focusing specially on options cycling.
@@ -24,7 +24,7 @@ if exists("s:briofita_support_version") || exists("g:briofita_support_version")
     finish
 endif
 
-let s:briofita_support_version = ["3.0.5"]
+let s:briofita_support_version = ["3.0.6"]
 let g:briofita_support_version = copy(s:briofita_support_version)
 
 function! s:SetMenuLocation()            " {{{1

@@ -15,7 +15,7 @@
 |              | and has details about how to set its parameters in order    |
 |              | to customize it.                                            |
 |              +-------------------------------------------------------------+
-|              | `Version`   v3.0.5  (view the release notes at the end)       |
+|              | `Version`   v3.0.6  (view the release notes at the end)       |
 |              | Author:   Sergio Nobre (sergio.o.nobre at gmail dot com)    |
 |              | Licence:  The VIM LICENCE applies to Briofita               |
 |              |           (read it in the Vim help:   ":help license").     |
@@ -976,6 +976,20 @@ Basic concepts, commands and options:
 
 ISSUES                                             *briofita-known-issues*  {{{1
 
+Cleared Highlights~
+
+When more than one highlight definition sources are active (colorschemes and
+syntax files, for example) an item may sometimes have its color cleared.
+
+Briofita has an internal guard for preventing cleared Normal highlights. For
+added robustness, it tries not to use highlight links.
+
+But it cannot guarantee that cleared highlights will not happen: for more
+information about this topic, view the below URL from Stackoverflow:
+http://stackoverflow.com/questions/12915797/gvim-remove-syntax-highlighting-groups/16630011#16630011
+
+
+
 Vim Help File Editing~
 
 Syntax elements HelpBar / HelpStar, when shown, may be in HIGH CONTRAST.
@@ -991,6 +1005,11 @@ HISTORY                                                 *briofita-history*  {{{1
 Below are the release notes of Briofita.
 
 ------------------------------------------------------------------------------
+
+v3.0.6 (October, 2013)~
+	- Colorscheme: Bug fix: corrected missing entry (in an internal list).
+	  Few changes for Asciidoc and Python syntaxes.
+	- Helpfile: Added a topic about cleared highlights (under Issues).
 
 v3.0.5 (October, 2013)~
 	- Plugin: Added global function g:ShowBriofitaInfo which performs
