@@ -15,7 +15,7 @@
 |              | and has details about how to set its parameters in order    |
 |              | to customize it.                                            |
 |              +-------------------------------------------------------------+
-|              | `Version`   v3.0.6  (view the release notes at the end)       |
+|              | `Version`   v3.0.7  (view the release notes at the end)       |
 |              | Author:   Sergio Nobre (sergio.o.nobre at gmail dot com)    |
 |              | Licence:  The VIM LICENCE applies to Briofita               |
 |              |           (read it in the Vim help:   ":help license").     |
@@ -58,15 +58,18 @@ ABOUT BRIOFITA                                            *briofita-about*  {{{1
 It can be downloaded from its Vim online page:
         http://www.vim.org/scripts/script.php?script_id=4136.
 
-The colorscheme normal background has a shaded dark-green color by default.
-It uses high contrast in a few syntax items. It gives higher priority to
+The normal colorscheme background style is of a shaded dark-green color (by
+default). The only exception is given by one of the options of the Normal
+dict key, which has black background.
+
+Briofita uses high contrast in a few syntax items. It gives higher priority to
 user's visual comfort within each filetype editing session, consequently, it
 does not try to enforce equal display of different filetypes' items that
 happen to have similar names (although many of such syntax items get similar
 highlights).
 
 The colorscheme was designed to fit study, research and work needs. (It is not
-recommended to color blinded people: it has elements highlighted in `red` ...)
+recommended to color blinded people: it has elements highlighted in red.)
 
 Due to the unusually high number of syntax highlights it implements and to
 its customization options, this is not a minimalist colorscheme, and, at the
@@ -87,7 +90,8 @@ Originally this colorscheme was just a tweaked version of `Moss` (vimscript
 #2779), with few changes for personal preferences; inspired by some favorite
 colorschemes, other features were added along the time; then it was
 restructured to use a color dictionary similar to the one used by the
-`Distinguished` colorscheme (vimscript #3529).
+`Distinguished` colorscheme (vimscript #3529). Later, several highlights
+for the author's favorite plugins have been added.
 
                                                                   |briofita-TOC|
 
@@ -97,20 +101,23 @@ INSTALLATION                                       *briofita-installation*  {{{1
 
 
 Briofita is currently made available first in the Vim online site.
+It is released as a packed file (zip).
 
-It is released as a packed file (zip). Just unpack it and move the
-files from the "colors", "doc" and "plugin" directories into the
-respective directories of your ".vim" directory.
+Manual installation for non-Pathogen users~
 
-If you want the colorscheme but not the plugin: do not copy the plugin into
-the "plugin" directory. The colorscheme does not depend on the plugin.
+Just unpack it and move the files from the "colors", "doc" and "plugin"
+directories into the respective directories of your ".vim" directory.
+And do :helptags.
 
-In case you use Pathogen (ou similar bundle-based plugins) create a
+Manual installation for Pathogen users~
+
+In case you use Pathogen (or similar bundle-based plugins) create a
 ".vim/bundle/briofita" directory and move the directory tree of the
 unpacked file into it. (If you do not want the plugin, just delete the "plugin"
 directory from the unzipped directory tree.)
+Proceed by doing ":Helptags".
 
-Proceed by doing ":helptags"  (for Pathogen users, ":Helptags").
+Things to do after installing Briofita~
 
 Read the hints about using Briofita in the help file:
 >
@@ -125,19 +132,28 @@ command:
 >
 			:color briofita
 <
-If you have installed the TabPageColorScheme plugin the above command can be
-replaced by this one which makes the colorscheme active for the current
-tabpage:
+If you have installed the TabPageColorScheme plugin, the above command can be
+replaced by the below one (this makes the colorscheme active for the current
+tabpage):
 >
  			:Tcolorscheme briofita
 <
 To have Briofita started at Vim start-up just put one of the above commands
-in your ".gvimrc".
+in your ".gvimrc" (it is a GUI-only colorscheme).
 
 These commands may be manually executed via briofita-support plugin menu, if
 you have installed the plugin. Just navigate through the menu until you find
 those entries that show the above commands. Clicking one of them you reload
 Briofita by the corresponding method.
+
+Partial Installation~
+The colorscheme does not depend on the plugin.
+If you want the colorscheme but not the plugin: >
+	Do not copy the plugin into the "plugin" directory; or, if it is already
+	there due to a bundled install, just delete your
+	          ~/.vim/bundle/briofita/plugin
+	directory.
+<
 
 Uninstallation~
 To uninstall Briofita, just delete the above sources from the "colors", "doc"
@@ -194,6 +210,17 @@ numeric value of a grouped option you get a different visual effect on each
 highlight item in the group. We call such grouped items "linked highlights",
 "coupled highlights" or "connected highlights".
 
+Viewing Current Options Configuration~
+An informational variable is exported by the colorscheme: g:briofita_keys.
+
+All distinct highlights assigned to each key option are reported
+(as an ":echo") by the following briofita-support plugin sub-menu: >
+	--> Plugin (default), or other menu under which you have inserted Briofita
+		--> Briofita Colorscheme Support
+		    --> Version
+			    --> View Briofita informational variable g:briofita_keys
+<
+(It shows the keys/highlight structure, not each highlight current settings.)
 
 Allowed Parameters~
 
@@ -297,10 +324,30 @@ structured "echo" on that variable, which may be accessed by following
 the menu path shown below: >
 	--> Plugin (default), or other menu under which you have inserted Briofita
 	--> "Briofita Colorscheme Support" main menu
-		--> "Help, About, Basics, Version" sub-menu
-			--> "Version" sub-menu
-				--> "View Briofita informational variable..." entry
+		--> "Version" sub-menu
+		     --> "View Briofita informational variable..." entry
 <
+
+                                                                  |briofita-TOC|
+
+------------------------------------------------------------------------------
+Brackets~
+
+Dictionary:         g:briofita_parms['brackets']
+max:                1
+Highlights(2):      Level16, Level16c
+
+The 'brackets' boolean key relates to syntax elements currently
+created only by the Rainbow plugin (or its siblings) for
+parentheses colorization.
+
+Briofita implements this key for improved visualization of lines
+which have parts of the text inside parentheses.
+
+State: ON by default.
+
+There is no issue if you let it be ON and you do not have the
+Rainbow plugin installed. You may safely ignore this dictionary key.
 
                                                                   |briofita-TOC|
 
@@ -318,9 +365,13 @@ ColorColumn~
 
 Dictionary:         g:briofita_parms['colorcolumn']
 max:                4
-Highlights(6):      ColorColumn, NonText,
-                    AsciidocBlockTitle, AsciidocQuotedSuperscript,
-					HtmlCommentPart, XmlCommentPart
+Highlights(20):     ColorColumn,NonText,aciidocBlockTitle,aciidocOneLineTitle,
+                    aciidocQuotedupercript,aciidocTableBlock,aciidocTablePrefix,
+					aciidocTablePrefix2,aciidocTwoLineTitle,htmlCommentPart,
+					htmlError,htmlpecialChar,markdownLinkText,
+					markdownOrderedLitMarker,nerdtreeDir,nerdtreeDirlah,
+					nerdtreeFile,nerdtreeOpenable,netrwComment,xmlCommentPart
+
 Command-line example: >
                 :let g:briofita_parms['colorcolumn'] = 2
 Explore the plugin menu for useful entries connected with this option.
@@ -334,7 +385,8 @@ CursorLine~
 
 Dictionary:    g:briofita_parms['cursorline']
 max:           9
-Highlights(2): CursorLine,  CursorColumn (ColorColumn if 'colorcolumn' value=1)
+Highlights(2): CursorLine,  CursorColumn
+               (and ColorColumn, if 'colorcolumn' key has value=1)
 Variable:      t:briofita_choice_for_cursorline
 
 Command-line example:
@@ -380,7 +432,7 @@ CursorLineNr~
 
 Dictionary:    g:briofita_parms['cursorlinenr']
 max:           3
-Highlights(3): CursorLineNr, VimNumber, VimTodo
+Highlights(4): CursorLineNr, vimLineComment, vimNumber, vimTodo
 
 Command-line example:
 >
@@ -454,7 +506,7 @@ Search~
 
 Dictionary:      g:briofita_parms['search']
 max:             11
-Highlights(1):   Search
+Highlights(2):   EasyMotionTarget, Search
 
 Command-line setting:
 >
@@ -469,16 +521,23 @@ option hlsearch to see the effect of this Briofita option.)
 ------------------------------------------------------------------------------
 Diff~
 Dictionary:     g:briofita_parms['diff']
-max:            11
-Highlights(11): diffAdd,diffAdded,diffChange,diffChanged,diffDelete,diffRemoved,
-                diffSubname,DiffText, diffFile, diffLine, diffNewFile
+max:            12
+Highlights(12): DiffText,diffAdd,diffAdded,diffChange,diffChanged,diffComment,
+                diffDelete,diffFile,diffLine,diffNewFile,diffRemoved,diffSubname,
 
-Useful when comparing files in Vim or opening diff files. Cycle, experimenting
-with the different alternatives, then define one as your favorite.
+This key relates to file comparison, when you use the Vim menu >
+   --> File
+       -->Split Diff with...
+<
+or when opening diff files (checking patches, for example).
 
-It was difficult to fine tune the options for the "diff" key, so we let it
-have so many options. Perhaps in a future version of the software we will
-get a better result and enable a reduction of the number of options.
+You may cycle, experimenting with the different alternatives, and then define
+one of them as your favorite. (Put the corresponding ":let" command in
+your .vimrc.)
+
+NOTE: It was difficult for the author to fine tune the options for
+the "diff" key, this explains why it currently has so many options.
+Perhaps a future version will have fewer options for this key.
 
                                                                   |briofita-TOC|
 
@@ -505,9 +564,9 @@ Mix01~
 
 Dictionary:    g:briofita_parms['mix01']
 max:           4
-Highlights(9): VimString,VimMapRHS,VimIsCommand,
-               VimEchoHLNone,VimFilter,VimFuncBody,JavaString,
-			   JavaConditional, JavaRepeat
+Highlights(14): javaConditional,javaRepeat,javaString,vimCommand,
+                vimEchoHLNone,vimFilter,vimFuncBody,vimIsCommand,
+				vimMapRHS,vimSet,vimSetEqual,vimSetMod,vimSetSep,vimString
 
                                                                   |briofita-TOC|
 
@@ -516,9 +575,11 @@ Special~
 
 Dictionary:     g:briofita_parms['special']
 max:            3
-Highlights(12): Special,HelpCommand,HelpHeader,HelpHeadline,HelpHypertextEntry,
-			    HelpHypertextJump,HelpSectionDelim,ManLongOptionDesc,
-				ManOptionDesc,PythonDot,PythonImport,PythonStatement
+Highlights(18): Special,_Operator,cStatement,helpCommand,helpHeader,
+                helpHeadline,helpHypertextEntry,helpHypertextJump,
+				helpSectionDelim,manLongOptionDesc,manOptionDesc,pythonDocTest,
+				pythonDocTest2,pythonDot,pythonImport,pythonSpaceError,
+				pythonStatement,rubyArrayDelimiter
 
                                                                   |briofita-TOC|
 
@@ -526,9 +587,25 @@ Highlights(12): Special,HelpCommand,HelpHeader,HelpHeadline,HelpHypertextEntry,
 Statusline~
 
 Dictionary:     g:briofita_parms['statusline']
-max:            1 (this is a so-called "boolean" option)
+max:            1
 Highlights(2):  StatusLine, StatusLineNC
-(This is a so-called "boolean" option.)
+
+This is one example of the so-called "boolean" options (the
+'brackets' key is another one).
+
+The meaning of 'statusline' when its value is zero is: the colorscheme will
+not set StatusLine and StatusLineNC. When its value is 1 it means: the
+colorscheme will set both highlights.
+
+NOTE:
+(1) The statusline you see when the active colorscheme is Briofita may NOT be
+    Briofita's statusline: since this is a "boolean" option, it will be
+	ignored by the colorscheme unless you set it.
+
+(2) This option is purposefully a "boolean" one, so that you can disable it
+    in order not to interfere with any settings originated from your
+	statusline plugin.
+
 
                                                                   |briofita-TOC|
 
@@ -538,7 +615,7 @@ TABPAGE LOCAL SETTINGS                           *briofita-local-settings*  {{{1
 
 Local Settings~
 
-Briofita CursorLine may have a feature which we here call "local" settings
+Briofita CursorLine option may have a feature which we call "local" settings
 (also "tabpage local" settings). Being "local", the CursorLine highlight may
 show different color backgrounds for each different tabpage. And this behavior
 extends to CursorColumn and other linked/coupled syntax items.
@@ -651,19 +728,23 @@ your main "Plugin" menu (by default). Then navigate to the Plugin menu, click on
 the Briofita support sub-menu and explore its sub-menu tree.
 
 The clickable menu entries at the top of the main menu, namely >
-	Help, About, Basics, Version
+	Help, About, Basics
+	Version
 <
-whose menu path is >
+An example of menu path for the first line is: >
 	--> Plugin (default), or other menu under which you have inserted Briofita
-	--> "Briofita Colorscheme Support" main menu
-		--> "Help, About, Basics, Version" sub-menu
+	--> "Briofita Colorscheme Support"
+		--> "Help, About, Basics"
 <
-allow you to navigate to the Help (displaying this help file), the About page,
-the Basic Actions sub-menu (which has a helpful newbies sub-menu crafted to help
-new Vim users to set Briofita-related Vim options), and the Version information
-sub-menu.
+which will allow you to navigate to the Help (displaying this help file),
+the About page, and the sub-menu that has basic actions. The Basics sub-menu
+itself has a helpful newbies sub-menu crafted to help new Vim users to set
+Briofita-related Vim options.
 
-Below are entries for cycling Briofita options, which are presented in this order: >
+The Version menu provides release/version and configuration information.
+
+Below these two top menus are entries for cycling Briofita options, which are
+presented in this order: >
 	colorcolumn
 	cursorline
 	conceal
@@ -679,13 +760,15 @@ Below are entries for cycling Briofita options, which are presented in this orde
 	statusline
 <
 Just click any entry whose text has an uppercase word "CYCLE" to increase the value of
-the corresponding Briofita option.
+the corresponding Briofita option. (Currently the plugin does not have a menu entry
+for changing the boolean "brackets" key; you may enable or disable it manually,
+by using the ":let" command.)
 
 For example, the fifth item in the above list is "diff". The menu path for cycling
 it is: >
 	--> Plugin (default), or other menu under which you have inserted Briofita
-	--> 'Briofita Colorscheme Support' main menu
-	--> 'CYCLE "diff" Briofita option'
+	    --> 'Briofita Colorscheme Support' main menu
+	         --> 'CYCLE "diff" Briofita option'
 <
 
 For colorcolumn and cursorline there are other menu options under their headings, besides
@@ -720,7 +803,8 @@ be created.
 
 If the global variable does not exist, the plugin inserts its menu under an
 assumed main "Plugin" menu. The resulting menu branch will be as follows: >
-		Plugin --> Briofita Colorscheme Support
+		--> Plugin
+		    --> Briofita Colorscheme Support
 <
 
 If you do not want the plugin menu, uninstall the plugin (delete it from the plugin
@@ -930,7 +1014,7 @@ Programming languages~
 <
 Lightweight markup tools~
 >
-	- Asciidoc, Fountain, Markdown
+	- Asciidoc, Fountain, Markdown, Restructured text (rst)
 <
 Web page editing~
 >
@@ -940,8 +1024,21 @@ Web page editing~
 <
 Customized highlights for Vim plugins~
 >
-	BufferSaurus / BufferGator, IndentGuides, log4j, ListMaps, ManpageView,
-	NERDTree, Netrw,  TabMan, TagList and some snippets plugins
+	BufferSaurus / BufferGator,
+	CtrlP, Dirlist,
+	Easymotion, Filesearch, IndentGuides, log4j,
+	ListMaps, ManpageView,
+	NERDTree, Explorer (netrw),
+	TabMan, TagList,
+	some task/todo plugins,
+	some snippets plugins
+<
+
+There is highlight support, too, for plugins which edit: >
+	desktop files,
+	ini files,
+	FSTAB entries,
+	m4/makefiles
 <
 
                                                                   |briofita-TOC|
@@ -1005,6 +1102,28 @@ HISTORY                                                 *briofita-history*  {{{1
 Below are the release notes of Briofita.
 
 ------------------------------------------------------------------------------
+
+v3.0.7 (December, 2013)~
+    * Colorscheme:
+		- Improvements in the function that treats cleared Normal highlight.
+		- Added the 'brackets' key to dict as a boolean option.
+		- More highlights added to the 'special' key.
+		- Added VimLineComment to the 'cursorlinenr' key.
+		- Added five more VimL highlights into the 'mix01' key.
+		- Added an EasyMotion highlight to the 'search' key.
+		- Diff key: changed both style and the order of the options;
+		  added DiffComment highlight; one more cycling option added.
+		- Changed style of StatusLine highlight under 'statusline' key.
+		- ColorColumn key: added highlights for Asciidoc, Html, NERDTree
+		  and Markdown, and changed style of XmlCommentPart.
+		- Changed or added highlight styles for: Asciidoc, Buffergator, Dirlist,
+		  C/C++, Desktop files, FSTAB editing, Ruby, Vim Help, Html, Markdown,
+		  NERDTree, netrw (Explorer), Python, Restructured text (rst),
+		  Todo/Task plugins, Shellscript, Diff, VimL, CtrlP, ini-files,
+		  EasyMotion, Filesearch, Tabman, Make / M4
+    * Plugin:
+	    - Moved the version submenu to a higher level in the menu tree,
+	      keeping help/about/basics submenus grouped in another branch.
 
 v3.0.6 (October, 2013)~
 	- Colorscheme: Bug fix: corrected missing entry (in an internal list).
