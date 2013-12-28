@@ -15,7 +15,7 @@
 |              | and has details about how to set its parameters in order    |
 |              | to customize it.                                            |
 |              +-------------------------------------------------------------+
-|              | `Version`   v3.0.7  (view the release notes at the end)       |
+|              | `Version`   v3.0.8  (view the release notes at the end)       |
 |              | Author:   Sergio Nobre (sergio.o.nobre at gmail dot com)    |
 |              | Licence:  The VIM LICENCE applies to Briofita               |
 |              |           (read it in the Vim help:   ":help license").     |
@@ -86,12 +86,25 @@ easily changing them). The plugin does not have to be installed for the
 colorscheme to function; on the other hand, most of the plugin's functionality
 requires that the colorscheme be installed and active.
 
+History~
 Originally this colorscheme was just a tweaked version of `Moss` (vimscript
 #2779), with few changes for personal preferences; inspired by some favorite
 colorschemes, other features were added along the time; then it was
 restructured to use a color dictionary similar to the one used by the
 `Distinguished` colorscheme (vimscript #3529). Later, several highlights
 for the author's favorite plugins have been added.
+
+Operating Systems~
+Development is currently done under GNU/Linux. The following remarks apply:
+
+Colorscheme: There is no operating-system specific command in the colorscheme.
+It should be `fully` functional under non-GNU/Linux operating systems.
+
+Plugin: It is supposed that `most` of its functionality would be available under
+non-GNU/Linux OSs.
+
+Please email the author, telling about your experiments with non-GNU/Linux
+OSs so that improvements can be provided in future releases.
 
                                                                   |briofita-TOC|
 
@@ -174,10 +187,11 @@ command of this plugin. (Briofita can be normally used without it.)
 When using the plugin you re-source the colorscheme by clicking on another
 tabpage and then back to the original tab.
 
-Other Local Colorscheme Plugins~
-There might be other Vim plugins that perform like the recommended one. You may
-search and try their use with Briofita... But Briofita has been tested only with
-this one until now. (Let me know of your experiences with other plugins.)
+Other Tabpage Colorscheme Plugins~
+Until now Briofita has been tested only with the recommended plugin.
+There might be some other Vim plugin that performs like the recommended one.
+In case you research and find one, Let me know of your experiments: my email
+is on this helpfile heading.
 
 Interaction with Common Statusline Plugins~
 The statusline plugin you use (if any) might not be aware of tabpage-local
@@ -210,47 +224,69 @@ numeric value of a grouped option you get a different visual effect on each
 highlight item in the group. We call such grouped items "linked highlights",
 "coupled highlights" or "connected highlights".
 
-Viewing Current Options Configuration~
-An informational variable is exported by the colorscheme: g:briofita_keys.
+Changeable Parameters (Options)~
 
-All distinct highlights assigned to each key option are reported
-(as an ":echo") by the following briofita-support plugin sub-menu: >
-	--> Plugin (default), or other menu under which you have inserted Briofita
-		--> Briofita Colorscheme Support
-		    --> Version
-			    --> View Briofita informational variable g:briofita_keys
+Options can be set by the user by assigning numerical values to the >
+	   g:briofita_parms
 <
-(It shows the keys/highlight structure, not each highlight current settings.)
+dictionary.
 
-Allowed Parameters~
-
-Briofita "parameters" (options) are keys in the >
-                        g:briofita_parms
-<
-Vim dictionary. The user can set any key provided it belongs to a
-colorscheme-managed global list, >
-                        g:briofita_allowed_parms
-<
-which is a list of keys the user is allowed to set.
-View the list by issuing this command >
-                        :echo g:briofita_allowed_parms.
-<
-Each key is an all-lowercase string, and each key holds a numerical value.
+Each key in it is an all-lowercase string, and each key holds a numerical value.
 Zero is the default highlight setting for each option. There are boolean-like
 options: they hold number 0 or number 1 as value and are regarded as an
 "attribute" that is present or absent. An example is 'statusline' key: if its
 value is zero the colorscheme will not set statusline related highlihgts.
 
-Command-line example 1:
->
-	" set Search option (in an existing dictionary)
-    let g:briofita_parms['search'] = 3
-
-Command-line example 2:
+Command-line setting example~
 >
 	" create a dictionary and set two Briofita options
     let g:briofita_parms = { 'search': 3, 'localcursorline':0 }
 <
+
+Allowed Options~
+
+Another dictionary is exported by the colorscheme: >
+	    g:briofita_keys.
+<
+This is an informational dictionary which has all option names as keys. It should
+not be changed by the user (the colorscheme would overwrite its contents).
+
+Each key in g:briofita_keys has the same name of a Briofita option.
+
+A simple list of options can be obtained by entering this command: >
+	:echo sort(keys(g:briofita_keys))
+<
+
+User-set keys in the g:briofita_parms dictionary are acknowledged only if they
+belong to g:briofita_keys. That means: if they are allowed.
+
+A more detailed list, with all the highlights assigned to each key, can be
+obtained by by issuing this command >
+                        :echo g:briofita_keys
+<
+
+Menu Entry for Allowed Options~
+
+The briofita-support plugin has a menu entry which makes it a
+bit easier to get a list of options and assigned highlights.
+
+All distinct highlights assigned to each key option are reported
+per Vim "echomsg" command.
+
+The menu path: >
+	--> Plugin (default), or other menu under which you have inserted Briofita
+		--> Briofita Colorscheme Support
+		    --> Version
+			    --> View Briofita informational variable g:briofita_keys
+<
+This is the third active menu-entry in the "Version" menu-panel.
+
+It performs an ":echomsg g:briofita_keys" command.
+
+Notice that it shows the structure of keys with their connected highlights,
+not current settings for each highlight (this you can get via the top-most
+active menu entry in the same Version menu panel).
+
 
 Briofita and Vim options~
 
@@ -1102,6 +1138,9 @@ HISTORY                                                 *briofita-history*  {{{1
 Below are the release notes of Briofita.
 
 ------------------------------------------------------------------------------
+
+v3.0.8 (December, 2013)~
+    * Helpfile: added a few topics and corrected some entries.
 
 v3.0.7 (December, 2013)~
     * Colorscheme:
