@@ -15,10 +15,11 @@
 |              | and has details about how to set its parameters in order    |
 |              | to customize it.                                            |
 |              +-------------------------------------------------------------+
-|              | `Version`   v3.0.8  (view the release notes at the end)       |
+|              | `Version`   v3.1.0  (view the release notes at the end)       |
 |              | Author:   Sergio Nobre (sergio.o.nobre at gmail dot com)    |
-|              | Licence:  The VIM LICENCE applies to Briofita               |
-|              |           (read it in the Vim help:   ":help license").     |
+|              | Licence:  The VIM LICENCE applies to Briofita, just change  |
+|              |           the term "Vim" to "Briofita" in its text          |
+|              |           (the Vim licence is in the help: ":help license").|
 +--------------+-------------------------------------------------------------+
 
 
@@ -41,7 +42,7 @@ TABLE OF CONTENTS                                         *briofita-TOC*    {{{1
  Issues ...................................... |briofita-known-issues|
  History ..................................... |briofita-history|
  TODO ........................................ |briofita-todo|
- Experimental Distractionless Editing ........ |briofita-distractionless|
+ NOTES ....................................... |briofita-notes|
 
 
 ==============================================================================
@@ -100,7 +101,7 @@ Development is currently done under GNU/Linux. The following remarks apply:
 Colorscheme: There is no operating-system specific command in the colorscheme.
 It should be `fully` functional under non-GNU/Linux operating systems.
 
-Plugin: It is supposed that `most` of its functionality would be available under
+Plugin: It is supposed that `most` of its functionality is available under
 non-GNU/Linux OSs.
 
 Please email the author, telling about your experiments with non-GNU/Linux
@@ -151,8 +152,8 @@ tabpage):
 >
  			:Tcolorscheme briofita
 <
-To have Briofita started at Vim start-up just put one of the above commands
-in your ".gvimrc" (it is a GUI-only colorscheme).
+To have the colorscheme started at Vim start-up just put one of the above commands
+in your ".gvimrc" (currently Briofita is a GUI-only colorscheme).
 
 These commands may be manually executed via briofita-support plugin menu, if
 you have installed the plugin. Just navigate through the menu until you find
@@ -187,6 +188,13 @@ command of this plugin. (Briofita can be normally used without it.)
 When using the plugin you re-source the colorscheme by clicking on another
 tabpage and then back to the original tab.
 
+Recommended tlib library plugin~
+
+The companion plugin displays its messages either via ":echo*" commands or
+via GUI dialogs, which are visually better. The latter use the tlib library,
+if available. You may install it easily, just search "tlib" on the Vim
+Online site (or on github).
+
 Other Tabpage Colorscheme Plugins~
 Until now Briofita has been tested only with the recommended plugin.
 There might be some other Vim plugin that performs like the recommended one.
@@ -206,11 +214,20 @@ the Briofita statusline option (it is what we call a "boolean" option).
 COLORSCHEME CUSTOMIZATION                         *briofita-customization*  {{{1
 
 
-Briofita comes with default settings for common user's needs.
+Briofita comes with default settings for common user's needs, but
+the user may choose what he/she prefers, among some options. The
+chosen options can be saved in a Vimscript file to be sourced via
+.gvimrc. Or even included in .gvimrc. This may be regarded
+as a simplified "favorite" feature. (One of the plugin's menus
+make it easy to "dump" the options into a new tabpage buffer.)
 
-But global variable options are provided and may be used to customize the way
-the syntax items are displayed. These options provide alternative displays for
-selected syntax items.
+There are two option types. Global options are applicable to any tabpage.
+Local options can be different from one tabpage to another. Currently
+the second type is implemented only for the CursorLine highlight (and
+optionally coupled CursorColumn highlight).
+
+Options are provided to customize the way the syntax items are displayed.
+They provide alternative displays for selected syntax items.
 
 The options (which we also call "parameters") are specified via integers,
 being zero the default. These numeric parameters were designed to enable user
@@ -224,18 +241,29 @@ numeric value of a grouped option you get a different visual effect on each
 highlight item in the group. We call such grouped items "linked highlights",
 "coupled highlights" or "connected highlights".
 
+Most of the options are named after one of the related highlights they implement,
+regarded as the "main" syntax item. But few of the options have only the main
+item. Most have unrelated items which have got grouped. You may
+get a list of the grouped items via one of the plugin menu entries.
+
+
 Changeable Parameters (Options)~
 
-Options can be set by the user by assigning numerical values to the >
+Global options can be set by the user by assigning numerical values to the >
 	   g:briofita_parms
 <
-dictionary.
+dictionary. Tabpage-local option "cursorline" can be set by by assigning
+numerical values to the >
+	   t:briofita_cursorline
+<
+variable, provided the global "localcursorline" key is set to 1.
 
-Each key in it is an all-lowercase string, and each key holds a numerical value.
-Zero is the default highlight setting for each option. There are boolean-like
-options: they hold number 0 or number 1 as value and are regarded as an
-"attribute" that is present or absent. An example is 'statusline' key: if its
-value is zero the colorscheme will not set statusline related highlihgts.
+Each key in the global dictionary is an all-lowercase string, and each key
+holds a numerical value. Zero is the default highlight setting for each
+option. There are boolean-like options: they hold number 0 or number 1
+as their value, and are regarded as an "attribute" that is present or
+absent. An example is 'statusline' key: if its value is zero the
+colorscheme will not set statusline related highlihgts.
 
 Command-line setting example~
 >
@@ -290,9 +318,10 @@ active menu entry in the same Version menu panel).
 
 Briofita and Vim options~
 
-Most of the Briofita options are connected to Vim options. If you usually do
-NOT use some Vim option, you do not need to use the corresponding Briofita
-option.
+Most of the Briofita optional highlights are connected to Vim options/highlights.
+If you usually do NOT use some Vim option, you do not need to use the corresponding
+Briofita option... except when a highlight you are interested in is part of a
+group of highlights named after that option.
 
 CursorLine option cycling~
 
@@ -304,7 +333,7 @@ them a new option is in effect.
 
 Command-line setting of options~
 
-Issue the command below in Vim command line. It should change your Search
+Enter the below command in Vim command-line. It should change your Search
 highlight background:
 
 >
@@ -319,12 +348,15 @@ with the command
 
 Practical way of setting Briofita options~
 
-The user may experiment different options settings (either via command-line
-or via plugin) until the favorite ones are found.
+This helpfile is a work-in-progress... it currently does not mentions all the
+plugin features. Experiment by clicking in different menu entries and by setting
+different options until you become well acquainted with Briofita.
 
-Once found, the user may edit the .gvimrc (or .vimrc) file to add the
-respective commands into it. That is the ideal location for the user's
-favorite settings.
+Once found your preferred options, click on the "Version" menu, and, under it,
+on the menu whose name starts with "Dump". This way a tabpage with all your
+current global settings will be created. Edit your .gvimrc file and add the
+commands shown in the tabpage into it. This way your favorite options will be
+in effect from the time Briofita starts up when you begin a new Vim instance.
 
 Options cycling~
 
@@ -340,24 +372,24 @@ value, the default.
 
 OPTIONS LIST                                       *briofita-options-list*  {{{1
 
+A list of options is provided after this help session.
 
 All the below Briofita options ("parameters") can be set by the user via
 command-line. Some of them may be set by clicking selected briofita-support
 GUI menu entries (mainly those with "CYCLE" in the menu entry text).
 
-Many options are meaningful only if you use the corresponding Vim option.
+Some options might be meaningful only if you use the corresponding Vim option.
 For example if you do not use Vim option "hlsearch" it does not make sense to
 set the Briofita option Search ('search' key).
 
 The colorscheme exports a global variable >
 	g:briofita_keys
 <
-that shows which highlight elements are currently used by Briofita.
+which has all the options and the connected highlights in a list.
 
 You may view the variable by issuing a simple Vim ":echo" command.
-Additionally, the plugin has a menu entry that performs a sort of
-structured "echo" on that variable, which may be accessed by following
-the menu path shown below: >
+
+Or you may use the plugin, by clicking on this menu path: >
 	--> Plugin (default), or other menu under which you have inserted Briofita
 	--> "Briofita Colorscheme Support" main menu
 		--> "Version" sub-menu
@@ -370,8 +402,6 @@ the menu path shown below: >
 Brackets~
 
 Dictionary:         g:briofita_parms['brackets']
-max:                1
-Highlights(2):      Level16, Level16c
 
 The 'brackets' boolean key relates to syntax elements currently
 created only by the Rainbow plugin (or its siblings) for
@@ -391,8 +421,6 @@ Rainbow plugin installed. You may safely ignore this dictionary key.
 Conceal~
 
 Dictionary:         g:briofita_parms['conceal']
-max:                4
-Highlights(2):      Conceal, VertSplit
 
                                                                   |briofita-TOC|
 
@@ -400,13 +428,6 @@ Highlights(2):      Conceal, VertSplit
 ColorColumn~
 
 Dictionary:         g:briofita_parms['colorcolumn']
-max:                4
-Highlights(20):     ColorColumn,NonText,aciidocBlockTitle,aciidocOneLineTitle,
-                    aciidocQuotedupercript,aciidocTableBlock,aciidocTablePrefix,
-					aciidocTablePrefix2,aciidocTwoLineTitle,htmlCommentPart,
-					htmlError,htmlpecialChar,markdownLinkText,
-					markdownOrderedLitMarker,nerdtreeDir,nerdtreeDirlah,
-					nerdtreeFile,nerdtreeOpenable,netrwComment,xmlCommentPart
 
 Command-line example: >
                 :let g:briofita_parms['colorcolumn'] = 2
@@ -420,10 +441,7 @@ to scroll to the right of the screen to see the cycling effects.
 CursorLine~
 
 Dictionary:    g:briofita_parms['cursorline']
-max:           9
-Highlights(2): CursorLine,  CursorColumn
-               (and ColorColumn, if 'colorcolumn' key has value=1)
-Variable:      t:briofita_choice_for_cursorline
+Variable:      t:briofita_cursorline
 
 Command-line example:
 >
@@ -449,7 +467,7 @@ Applying CursorLine to the current tabpage:
 	YOU ARE:
 >
 			let g:briofita_parms['localcursorline'] = 1
-			set t:briofita_choice_for_cursorline=3
+			set t:briofita_cursorline=3
 <
 	The example assumes your favorite CursorLine option for the current tab
 	is the option with number 3.
@@ -467,8 +485,6 @@ Connected flag:
 CursorLineNr~
 
 Dictionary:    g:briofita_parms['cursorlinenr']
-max:           3
-Highlights(4): CursorLineNr, vimLineComment, vimNumber, vimTodo
 
 Command-line example:
 >
@@ -480,8 +496,6 @@ Command-line example:
 Folded~
 
 Dictionary:      g:briofita_parms['folded']
-max:             5
-Highlights(1):   Folded
 
 Command-line setting:
 >
@@ -495,7 +509,7 @@ This Briofita option is related to the way Vim displays folded items.
 LocalCursorLine~
 
 Dictionary:   g:briofita_parms['localcursorline']
-max:          1 (this is a so-called "boolean" option)
+              ("boolean" option)
 
 Command-line setting:
 >
@@ -520,8 +534,6 @@ any corresponding Vim option.)
 Normal~
 
 Dictionary:      g:briofita_parms['normal']
-max:             9
-Highlights(2):   Normal, LineNr
 
 Command-line setting:
 >
@@ -541,8 +553,6 @@ room has more illumination than usual.
 Search~
 
 Dictionary:      g:briofita_parms['search']
-max:             11
-Highlights(2):   EasyMotionTarget, Search
 
 Command-line setting:
 >
@@ -557,9 +567,6 @@ option hlsearch to see the effect of this Briofita option.)
 ------------------------------------------------------------------------------
 Diff~
 Dictionary:     g:briofita_parms['diff']
-max:            12
-Highlights(12): DiffText,diffAdd,diffAdded,diffChange,diffChanged,diffComment,
-                diffDelete,diffFile,diffLine,diffNewFile,diffRemoved,diffSubname,
 
 This key relates to file comparison, when you use the Vim menu >
    --> File
@@ -581,8 +588,6 @@ Perhaps a future version will have fewer options for this key.
 FoldColumn~
 
 Dictionary:      g:briofita_parms['foldcolumn']
-max:             5
-Highlights(1):   FoldColumn
 
                                                                   |briofita-TOC|
 
@@ -590,8 +595,6 @@ Highlights(1):   FoldColumn
 MatchParen~
 
 Dictionary:    g:briofita_parms['matchparen']
-max:           5
-Highlights(3): MatchParen, ModeMsg, MoreMsg
 
                                                                   |briofita-TOC|
 
@@ -599,10 +602,6 @@ Highlights(3): MatchParen, ModeMsg, MoreMsg
 Mix01~
 
 Dictionary:    g:briofita_parms['mix01']
-max:           4
-Highlights(14): javaConditional,javaRepeat,javaString,vimCommand,
-                vimEchoHLNone,vimFilter,vimFuncBody,vimIsCommand,
-				vimMapRHS,vimSet,vimSetEqual,vimSetMod,vimSetSep,vimString
 
                                                                   |briofita-TOC|
 
@@ -610,12 +609,6 @@ Highlights(14): javaConditional,javaRepeat,javaString,vimCommand,
 Special~
 
 Dictionary:     g:briofita_parms['special']
-max:            3
-Highlights(18): Special,_Operator,cStatement,helpCommand,helpHeader,
-                helpHeadline,helpHypertextEntry,helpHypertextJump,
-				helpSectionDelim,manLongOptionDesc,manOptionDesc,pythonDocTest,
-				pythonDocTest2,pythonDot,pythonImport,pythonSpaceError,
-				pythonStatement,rubyArrayDelimiter
 
                                                                   |briofita-TOC|
 
@@ -623,8 +616,6 @@ Highlights(18): Special,_Operator,cStatement,helpCommand,helpHeader,
 Statusline~
 
 Dictionary:     g:briofita_parms['statusline']
-max:            1
-Highlights(2):  StatusLine, StatusLineNC
 
 This is one example of the so-called "boolean" options (the
 'brackets' key is another one).
@@ -651,8 +642,8 @@ TABPAGE LOCAL SETTINGS                           *briofita-local-settings*  {{{1
 
 Local Settings~
 
-Briofita CursorLine option may have a feature which we call "local" settings
-(also "tabpage local" settings). Being "local", the CursorLine highlight may
+Briofita CursorLine option may behave in a way we call "local" via its
+tabpage-local settings. Being "local", the CursorLine highlight may
 show different color backgrounds for each different tabpage. And this behavior
 extends to CursorColumn and other linked/coupled syntax items.
 
@@ -670,8 +661,10 @@ Complementary Locality Condition~
 
 Do this, creating one different instance per tabpage:
 >
-	set t:briofita_choice_for_cursorline with a CursorLine applicable value
+	set t:briofita_cursorline = ...
 <
+where "..." should be a value applicable to the CursorLine option.
+
 If you delete the tabpage variable while the key 'localcursorline' keeps its
 value 1:
 >
@@ -680,9 +673,27 @@ value 1:
 <
 The same happens if you set that key to 1 and do not create the tabpage
 variable. Even if you delete all the tabpage variables, they will be recreated
-with default value on reentry to the tabpage.
+with default value on reentry to the tabpage. Except if you reset the
+'localcursorline' key (to value 0).
 
-Except if you reset 'localcursorline' key (to value 0).
+If you intend to manually change the CursorLine option, instead of using
+the amenities provided by the plugin menus, remember that: >
+	   If the global 'localcursorline' option is reset(0), you should change
+	   the global dictionary key g:briofita_parms.cursorline, not the
+	   tabpage variable.
+< and >
+	   If the global 'localcursorline' option is set(1), you should change
+	   the t:briofita_cursorline variable, not the dictionary one.
+<
+
+If you expected some highlight change which did not happen, try this: >
+       click on another tabpage and,
+	   then, back to the original one
+<
+to allow the colorscheme to be re-executed with the new parameter values.
+(This applies to users of the tabpagecolorscheme plugin.)
+
+
 
 Creating, Setting or Deleting the Tabpage Variable~
 
@@ -695,18 +706,19 @@ You may delete the tabpage variable with the Vim ":unlet" command.
 you may try. Limitation: that part of the plugin was designed with testing in
 mind, further development is necessary to fulfill normal user needs.)
 
-Recommended Entry~
-
-Although not required, if you will use the "local cursorline" feature, it is
-recommended that you set the 'cursorline' parameter in the global dictionary.
+When you have the local cursorline feature on, there is no issue if you
+set the 'cursorline' parameter in the global dictionary. But remember that
+it will not get the same priority as the t:briofita_cursorline variable. The
+colorscheme may ignore it, or, even assign into it the value of the
+tabpage variable.
 
 Priority of Cursorline Options~
 
-If 'localcursorline' is set (its value is 1), this is the established
+When 'localcursorline' is set (its value is 1), there is an established
 priority among the possible Briofita 'cursorline' option sources:
 
 >
-	first:  variable  t:briofita_choice_for_cursorline
+	first:  variable  t:briofita_cursorline
 	second: dictionary key g:briofita_parms.cursorline
 	third:  default setting for cursorline (zero)
 <
@@ -1139,6 +1151,31 @@ Below are the release notes of Briofita.
 
 ------------------------------------------------------------------------------
 
+v3.1.0 (March, 2014)~
+    * Colorscheme:
+		- Bug fixes.
+		- Several changes in options' sequence and alternatives.
+		- Dropped previous "no distraction" mode (distractionless option).
+		- Improvements highlight styles for C/C++, Perl, Python,
+		  Vim Help, Ruby, shellscript, VimL, diff, Asciidoc, PL/SQL,
+		  XML, HTML, Java, Manpage
+		- Added/changed Syntastic and TagList highlight customizations.
+		- Improvements in local options logic and dictionary handling.
+    * Plugin:
+	    - Added a Snapshot menu entry for easier options display.
+	    - Added a parameter dump function and corresponding Dump menu entry.
+		  This enables saving user's "favorite" options as executable commands.
+	    - Several improvements in the code.
+	    - Better text displayed in warnings/errors.
+	    - Improved treatment of echoed messages.
+		- Better formatting of displayed options; clear separation
+		  between global and local options.
+		- Enabled refreshing Briofita options without having to restart the plugin.
+		- Defined a config variable g:briofita_show_cycle_snapshot for tuning
+		  some plugin messages.
+		- Changed the name of the global function that shows detailed option
+		  information to "g:ShowBriofitaKeysInfo".
+
 v3.0.8 (December, 2013)~
     * Helpfile: added a few topics and corrected some entries.
 
@@ -1298,101 +1335,27 @@ TODO                                                       *briofita-todo*  {{{1
 	  move from my desk near the window, so I had to use some other, brighter
 	  colorscheme.
 
+NOTES                                                        *briofita-notes*
+
+Briofita used to have an experimental distraction-less mode.
+
+It has now been dropped. In case you need something in that style we
+recommend you search the Vim online site and github for specialized
+plugins. Your search may use terms like
+>
+	dark room, or
+	distraction
+<
+for example. Two such links from the Vim site are provided below: >
+	DistractFree plugin:
+	http://www.vim.org/scripts/script.php?script_id=4357
+< and >
+	Goyo plugin:
+	http://www.vim.org/scripts/script.php?script_id=4785
+<
+You may find many more if you search...
                                                                   |briofita-TOC|
 
-==============================================================================
-
-DISTRACTIONLESS MODE                            *briofita-distractionless*  {{{1
-
-Briofita has a distraction-less editing feature. >
-	This topic is located at the end of the helpfile because it is an
-	experimental feature, very basic, not for heavy users: if you are one,
-	check any of the Vim plugins focused on this feature (for example, search
-	"dark room" or "distraction" on the Vim Online site).
-<
-In this mode some visual elements have low visibility or are almost hidden.
-For this mode only, Briofita sets User1-User9 highlights so that the
-statusline becomes almost hidden. And for an effective use you will most
-likely need additional settings like resetting Vim option "number", for example.
-
-Variable t:briofita_nodistractionmode~
-This is the commanding variable for this mode. There are only TWO possible
-values for this variable. Zero makes the highlights used for this mode to have
-the typical Briofita background style. One makes the background be black.
-
-Entering no-distraction mode on a tab~
-Follow this procedure:
->
-   - create the above mentioned tabpage-local variable: use the 'let' command;
-   - click on another tabpage (or create an empty one);
-   - click back on the first tabpage.
-<
-NOTE Clicking out and in again is necessary for the colorscheme to get to know
-about the existence and contents of the tabpage-local variable. Let me know
-if you know some technically feasible way of avoiding this clicking!
-
-Changing no-distraction mode numeric option on the same tab~
-If, on a tabpage, you used option 1 and want to change to option 0 (or the
-reverse):
->
-   - in the same tabpage do a 'let' command to change the variable value;
-   - click on another tabpage (or create an empty one);
-   - click back on the first tabpage.
-<
-
-Leaving no-distraction mode on a tab and staying there in common mode~
-If, after a session of no-distraction mode, you want to shift to the common
-editing mode (ie, the non-distractionless mode) in the same tabpage, you should
-follow this procedure:
->
-   - delete the variable: issue an UNLET command upon it;
-   - click on another tabpage (or create an empty one);
-   - click back on the first tabpage.
-<
-NOTE 1: The mere existence of the above variable implies that the
-		no-distraction mode is in effect in the tabpage. That explains
-		why we need to `unlet` it.
-
-NOTE 2: It is more practical to close! the tabpage and work with
-		another. Remember that Vim allows you to have the same buffer
-		open in more than one place!
-
-EXAMPLE OF DISTRACTIONLESS EDITING~
-
-The below sequence of command-line instructions show how to try a simple
-example of distractionless editing.
-
-(1) Open a new tab page, set the proper global variable and reload the
-    colorscheme:
->
-         :tabnew
-         :let t:briofita_nodistractionmode=0
-         :colorscheme briofita
-<
-
-(2) Edit a few lines for a test.
-
-(3) When done, and BEFORE proceeding to common, non-distractionless editing:
-
-     - either (in the same tab) DELETE the global variable:
->
-         :unlet! t:briofita_nodistractionmode
-<
-     - or CLOSE the tabpage (this will bring you to another tab, or to the
-	   remaining tab):
->
-         :tabclose!
-<
-     - or OPEN a new tabpage (this will put you in the new tab):
->
-		 :tabnew!
-<
-(4) If you stayed on the same tab (the first alternative above), reload the
-    colorscheme with this command:
->
-         :colorscheme briofita
-<
-                                                                  |briofita-TOC|
 
 ==============================================================================
 Modeline: {{{1
