@@ -25,6 +25,11 @@ if exists("s:briofita_support_version") || exists("g:briofita_support_version")
     finish
 endif
 
+" Vimscript Setup: {{{1
+" Allow use of line continuation.
+let s:save_cpo = &cpo
+set cpo&vim
+
 let s:briofita_support_version = ["3.1.0"]
 let g:briofita_support_version = copy(s:briofita_support_version)
 
@@ -1569,6 +1574,10 @@ function! g:BriofitaMenu(...) " {{{1
     "    execute menucmd
     "endif
 endfunction
+
+" Teardown:{{{1
+"reset &cpo back to users setting
+let &cpo = s:save_cpo
 
 "
 "----------------------------------------------------------------------------
